@@ -1,0 +1,6 @@
+framework module HASlider {
+  umbrella header "HASlider-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		2AB5935C8C4FC26B21EE192E1BD83338 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		6134691B92D658D6319AFED3DB949EA7 /* Pods-HASlider_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D02ADADC92FED3895A2F0C9704A8FDA /* Pods-HASlider_Example-dummy.m */; };
-		6AC593A1E17BB13F3B94C6F17D29FA88 /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E383CD309BFA17A381536569BFB92EDC /* ReplaceMe.swift */; };
 		770DDBE240109399C501FB50AC659E3E /* Pods-HASlider_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BF5641DA3DDEE8A949BD78A663F6E1 /* Pods-HASlider_Tests-dummy.m */; };
 		785077599D500D03DCBC647127C08A86 /* HASlider-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F87DC20A41D3899C3BEE6A980931C4 /* HASlider-dummy.m */; };
 		8CBD97CA9BD0069791B6D9BF288CA807 /* Pods-HASlider_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CC172B5B99C786B99DFD3BF3DE7C58F3 /* Pods-HASlider_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9DBF001E201DBF4700F57A4E /* HASlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBF001D201DBF4600F57A4E /* HASlider.swift */; };
 		CF128DAB871DB45CD67CFE98E94DF581 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		E20E543656A0D1A1DF927DB8C07E6565 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		E4B8DB172D9AF3A96235F1170CC0B913 /* HASlider-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 124E45111007090FE0E1751DAE9C43FD /* HASlider-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,7 +31,7 @@
 
 /* Begin PBXFileReference section */
 		038795932F7E4AF3868B3AFBBB3579ED /* Pods-HASlider_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HASlider_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		04A964752D1B009F4129F06B21BC6FDB /* Pods-HASlider_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HASlider_Example.modulemap"; sourceTree = "<group>"; };
+		04A964752D1B009F4129F06B21BC6FDB /* Pods-HASlider_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-HASlider_Example.modulemap"; sourceTree = "<group>"; };
 		0A6D8CB451A573EB37FAF4BCB73EA8B4 /* Pods-HASlider_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HASlider_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		10F9726C51C202A8A06B453A1D06D703 /* Pods-HASlider_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HASlider_Example-frameworks.sh"; sourceTree = "<group>"; };
 		124E45111007090FE0E1751DAE9C43FD /* HASlider-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HASlider-umbrella.h"; sourceTree = "<group>"; };
@@ -40,27 +40,27 @@
 		26A86B4C2815784C8C8582E00F6D10E9 /* HASlider-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HASlider-prefix.pch"; sourceTree = "<group>"; };
 		360051AB1B291F6E2F46D9D90173FABF /* Pods-HASlider_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HASlider_Example.release.xcconfig"; sourceTree = "<group>"; };
 		43BF5641DA3DDEE8A949BD78A663F6E1 /* Pods-HASlider_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HASlider_Tests-dummy.m"; sourceTree = "<group>"; };
-		578DBCA07067F556E0A37710815025C6 /* HASlider.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = HASlider.modulemap; sourceTree = "<group>"; };
-		6013FBF28EAF1E33503F7310FE0FA0C7 /* HASlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = HASlider.framework; path = HASlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		578DBCA07067F556E0A37710815025C6 /* HASlider.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = HASlider.modulemap; sourceTree = "<group>"; };
+		6013FBF28EAF1E33503F7310FE0FA0C7 /* HASlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HASlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		77744792215A36782949A6FF27459493 /* Pods-HASlider_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HASlider_Tests-umbrella.h"; sourceTree = "<group>"; };
 		782F1E56651CD404CA4CD999836B9FB7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		846E5D0B9D3426FB81B48E5C590DB7D9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		869C2C8433F578F260C2583D7D9A41B7 /* Pods-HASlider_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HASlider_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8D1061A2B277871E1030D1BC9D2D065A /* Pods-HASlider_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HASlider_Tests-frameworks.sh"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		95F87DC20A41D3899C3BEE6A980931C4 /* HASlider-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HASlider-dummy.m"; sourceTree = "<group>"; };
+		9DBF001D201DBF4600F57A4E /* HASlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HASlider.swift; path = HASlider/Classes/HASlider.swift; sourceTree = "<group>"; };
 		A00E0A5D4113B40B4CFED6EB70899107 /* Pods-HASlider_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HASlider_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		B56E3740107348807CB75DF4BC58844F /* Pods-HASlider_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HASlider_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		BA1AB1AACEA3F714B808692DF6B3D2AE /* Pods-HASlider_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HASlider_Example-resources.sh"; sourceTree = "<group>"; };
 		C20657AE204B52DE1EBD44DA8F66ADF5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C31EF9F6A5E860765F3555C8CE9788BF /* Pods-HASlider_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HASlider_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		C3C628D5D467A45491B41DAB8D71FF41 /* Pods_HASlider_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HASlider_Example.framework; path = "Pods-HASlider_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3C628D5D467A45491B41DAB8D71FF41 /* Pods_HASlider_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HASlider_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC172B5B99C786B99DFD3BF3DE7C58F3 /* Pods-HASlider_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HASlider_Example-umbrella.h"; sourceTree = "<group>"; };
-		DECC6D459D376CA6DFB9DB1926FBC92D /* Pods_HASlider_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HASlider_Tests.framework; path = "Pods-HASlider_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E383CD309BFA17A381536569BFB92EDC /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaceMe.swift; path = HASlider/Classes/ReplaceMe.swift; sourceTree = "<group>"; };
+		DECC6D459D376CA6DFB9DB1926FBC92D /* Pods_HASlider_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HASlider_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7DEB5EC967AA4C3BC19CFD33FC2AA00 /* Pods-HASlider_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HASlider_Tests-resources.sh"; sourceTree = "<group>"; };
-		FA37D020217230F76AD147A401F11E3E /* Pods-HASlider_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HASlider_Tests.modulemap"; sourceTree = "<group>"; };
+		FA37D020217230F76AD147A401F11E3E /* Pods-HASlider_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-HASlider_Tests.modulemap"; sourceTree = "<group>"; };
 		FDC5CE6692BC45F194338D9AB5FE1AB5 /* Pods-HASlider_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HASlider_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -199,7 +199,7 @@
 		E1F5A1BE2EE3D9A8DA70F43551336769 /* HASlider */ = {
 			isa = PBXGroup;
 			children = (
-				E383CD309BFA17A381536569BFB92EDC /* ReplaceMe.swift */,
+				9DBF001D201DBF4600F57A4E /* HASlider.swift */,
 				D7CA8457CDDE0D3294E71A231FF0F309 /* Support Files */,
 			);
 			name = HASlider;
@@ -296,6 +296,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0700;
+				TargetAttributes = {
+					C7C4F3F38EB921010380197E728FC154 = {
+						LastSwiftMigration = 0920;
+					};
+				};
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -322,7 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				785077599D500D03DCBC647127C08A86 /* HASlider-dummy.m in Sources */,
-				6AC593A1E17BB13F3B94C6F17D29FA88 /* ReplaceMe.swift in Sources */,
+				9DBF001E201DBF4700F57A4E /* HASlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +429,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A7081F22C2323C4F8B10DF95815F1EB /* HASlider.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -637,6 +643,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A7081F22C2323C4F8B10DF95815F1EB /* HASlider.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";

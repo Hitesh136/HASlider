@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'HASlider_Example' do
+  pod 'HASlider', :path => '../'
+
+  target 'HASlider_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

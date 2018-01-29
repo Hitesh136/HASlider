@@ -39,12 +39,15 @@ open class HASlider: UIControl {
     }
     
     open var delegate: SliderDelegate?
+    
     //MARK:- Line Variables
     
     @IBInspectable
     var lineHeight: CGFloat = 2.0 {
         didSet {
             sliderLine.frame = CGRect(x: sliderLine.frame.origin.x, y: sliderLine.frame.origin.y, width: lineWidth, height: lineHeight)
+            drawLeftHandler(addInView: false)
+            drawRightHanlder(addInView: false)
         }
     }
     
@@ -160,8 +163,8 @@ open class HASlider: UIControl {
     
     func setup() {
         drawSliderLine()
-        drawLeftHandler()
-        drawRightHanlder()
+        drawLeftHandler(addInView: true)
+        drawRightHanlder(addInView: true)
         drawLeftSelectionLine()
         drawMiddleSelectionLine()
         drawRightSelectionLine()
@@ -180,25 +183,32 @@ open class HASlider: UIControl {
         self.layer.addSublayer(sliderLine)
     }
     
-    func drawLeftHandler() {
-        let handlerX = positionForValue(value: leftValue)
-        handlerY = (lineY + (lineHeight / 2 )) - (leftHandlerHeight / 2)
-        leftHandler.frame = CGRect(x: handlerX, y: handlerY, width: leftHandlerWidth, height: leftHandlerHeight)
+    func drawLeftHandler(addInView isAddSubLayer: Bool) {
+        
+        // Parameter isAddsublayer use to check if lefthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
+        leftHandler.frame = getHandlerFrame(forValue: leftValue)
         leftHandler.backgroundColor = leftHandlerColor.cgColor
         leftHandler.cornerRadius = (leftHandlerHeight / 2)
-        leftHandlerPreviousLocation = CGPoint(x: handlerX, y: handlerY)
+        leftHandlerPreviousLocation = CGPoint(x: leftHandler.frame.origin.x, y: handlerY)
         leftHandler.zPosition = handlerLowerZPosition
-        self.layer.addSublayer(leftHandler)
+        
+        if isAddSubLayer {
+            self.layer.addSublayer(leftHandler)
+        }
     }
     
-    func drawRightHanlder() {
-        let handlerX = positionForValue(value: rightValue)
-        rightHandler.frame = CGRect(x: handlerX, y: handlerY, width: rightHandlerWidth, height: rightHandlerHeight)
+    func drawRightHanlder(addInView isAddSubLayer: Bool) {
+        
+        // Parameter isAddsublayer use to check if lefthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
+        rightHandler.frame = getHandlerFrame(forValue: rightValue)
         rightHandler.backgroundColor = rightHandlerColor.cgColor
         rightHandler.cornerRadius = (rightHandlerHeight / 2)
-        rightHandlerPreviousLocation = CGPoint(x: handlerX, y: handlerY)
+        rightHandlerPreviousLocation = CGPoint(x: rightHandler.frame.origin.x, y: handlerY)
         rightHandler.zPosition = handlerLowerZPosition
-        self.layer.addSublayer(rightHandler)
+        
+        if isAddSubLayer {
+            self.layer.addSublayer(rightHandler)
+        }
     }
     
     func drawLeftSelectionLine() {
@@ -421,7 +431,18 @@ open class HASlider: UIControl {
         return (v1 / v2)
     }
     
-    //MARK:- SelectionLine Frames
+}
+
+//MARK:- Get Frames
+extension HASlider {
+    
+    func getHandlerFrame(forValue value: CGFloat) -> CGRect{
+        let handlerX = positionForValue(value: value)
+        handlerY = (lineY + (lineHeight / 2 )) - (leftHandlerHeight / 2)
+        return CGRect(x: handlerX, y: handlerY, width: leftHandlerWidth, height: leftHandlerHeight)
+    }
+    
+    //SelectionLine Frames
     func getLeftSelectionLineFrame() -> CGRect {
         
         //Starting Point

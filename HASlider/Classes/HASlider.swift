@@ -7,6 +7,12 @@ public protocol SliderDelegate {
     func endTracking(slider: HASlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool)
 }
 
+enum FrameTag: Int {
+    case tag_Line, tag_LeftHandler, tag_RightHandler, tag_LeftTipView, tag_RightTipView
+}
+
+let KRightHandler = "RightHandlerTag"
+
 @IBDesignable
 open class HASlider: UIControl {
     
@@ -45,8 +51,8 @@ open class HASlider: UIControl {
     var lineHeight: CGFloat = 2.0 {
         didSet {
             sliderLine.frame = CGRect(x: sliderLine.frame.origin.x, y: sliderLine.frame.origin.y, width: lineWidth, height: lineHeight)
-            drawLeftHandler(addInView: false)
-            drawRightHanlder(addInView: false)
+            updateLeftHanlderFrame(addInView: false)
+            updateRightHanlderFrame(addInView: false)
             updateLineCorner()
         }
     }
@@ -65,14 +71,12 @@ open class HASlider: UIControl {
         }
     }
     
-    
     //MARK:- Values
     @IBInspectable
     open var minimumValue: CGFloat = 0.0
     
     @IBInspectable
     open var maximumValue: CGFloat = 10.0
-    
     
     @IBInspectable
     open var leftValue: CGFloat = 0.0 {
@@ -141,6 +145,22 @@ open class HASlider: UIControl {
     var lineY: CGFloat = 0.0
     var handlerY: CGFloat = 0.0
     
+    @IBInspectable
+    open var disableRange: Bool = false {
+        didSet {
+            if disableRange {
+                rightHandler.isHidden = true
+                rightTipView.isHidden = true
+                rightSelectionLine.isHidden = true
+            }
+            else {
+                rightHandler.isHidden = false
+                rightTipView.isHidden = false
+                rightSelectionLine.isHidden = false
+            }
+        }
+    }
+    
     //MARK:- LeftHandler
     var leftHandlerPreviousLocation = CGPoint(x: 0.0, y: 0.0)
     let leftHandlerWidth:CGFloat = 31.0
@@ -157,9 +177,6 @@ open class HASlider: UIControl {
     open var leftTitleView: UIView? = nil
     open var rightTitleView: UIView? = nil
     
-    //MARK:- SelectionLine
-    
-    
     //MARK:- View LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -173,8 +190,8 @@ open class HASlider: UIControl {
     
     func setup() {
         drawSliderLine()
-        drawLeftHandler(addInView: true)
-        drawRightHanlder(addInView: true)
+        updateLeftHanlderFrame(addInView: true)
+        updateRightHanlderFrame(addInView: true)
         drawLeftSelectionLine()
         drawMiddleSelectionLine()
         drawRightSelectionLine()
@@ -193,7 +210,7 @@ open class HASlider: UIControl {
         self.layer.addSublayer(sliderLine)
     }
     
-    func drawLeftHandler(addInView isAddSubLayer: Bool) {
+    func updateLeftHanlderFrame(addInView isAddSubLayer: Bool) {
         
         // Parameter isAddsublayer use to check if lefthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
         leftHandler.frame = getHandlerFrame(forValue: leftValue)
@@ -207,7 +224,7 @@ open class HASlider: UIControl {
         }
     }
     
-    func drawRightHanlder(addInView isAddSubLayer: Bool) {
+    func updateRightHanlderFrame(addInView isAddSubLayer: Bool = true ) {
         
         // Parameter isAddsublayer use to check if lefthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
         rightHandler.frame = getHandlerFrame(forValue: rightValue)
@@ -217,6 +234,7 @@ open class HASlider: UIControl {
         rightHandler.zPosition = handlerLowerZPosition
         
         if isAddSubLayer {
+            self.layer.setValue(FrameTag.tag_RightHandler, forKey: KRightHandler)
             self.layer.addSublayer(rightHandler)
         }
     }
@@ -271,6 +289,12 @@ open class HASlider: UIControl {
     }
     
     func updateRightTipViewPosition() {
+        
+        //if range is disable than rightTipView is not visible
+        if disableRange {
+            return
+        }
+        
         let xPosition = positionForValue(value: rightValue)
         updateZpositionOfHandler()
         if xPosition >= lineWidth {
@@ -303,6 +327,7 @@ open class HASlider: UIControl {
     }
     
     func updateRightHandlerPosition() {
+        
         var newX = positionForValue(value: rightValue)
         
         //        Check if right handler cross left handler
@@ -331,7 +356,6 @@ open class HASlider: UIControl {
     
     func updateRightSelectionLineWidth() {
         rightSelectionLine.frame = getRightSelectionFrame()
-        
     }
     
     func updateZpositionOfHandler() {
@@ -384,6 +408,12 @@ open class HASlider: UIControl {
     }
     
     func isTouchRightHandler(location: CGPoint) -> Bool {
+        
+        //Check if slider type in single handler
+        if disableRange {
+            return false
+        }
+        
         let totalX = rightHandler.frame.origin.x + rightHandler.frame.width
         let totalY = rightHandler.frame.origin.y + rightHandler.frame.height
         
@@ -444,12 +474,14 @@ open class HASlider: UIControl {
     func updateLineCorner() {
         if roundCorner {
             sliderLine.cornerRadius = lineHeight / 2
+            middleSelectionLine.cornerRadius = lineHeight / 2
             leftSelectionLine.cornerRadius = lineHeight / 2
             rightSelectionLine.cornerRadius = lineHeight / 2
         }
         else {
             sliderLine.cornerRadius = 0.0
             leftSelectionLine.cornerRadius = 0.0
+            middleSelectionLine.cornerRadius = 0.0
             rightSelectionLine.cornerRadius = 0.0
         }
     }
@@ -487,10 +519,16 @@ extension HASlider {
         let startingPoint = CGPoint(x: startX, y: lineY)
         
         //Ending Point
-        var endX = positionForValue(value: rightValue)
-        endX = endX + ( leftHandlerWidth / 2 )
-        let endPoint = CGPoint(x: endX, y: lineY)
+        var endX: CGFloat = 0.0
+        if disableRange {
+            endX = sliderLine.frame.width
+        }
+        else {
+            endX = positionForValue(value: rightValue)
+            endX = endX + ( leftHandlerWidth / 2 )
+        }
         
+        let endPoint = CGPoint(x: endX, y: lineY)
         let width = endPoint.x - startingPoint.x
         return  CGRect(x: startingPoint.x, y: lineY, width: width, height: lineHeight)
     }
@@ -516,14 +554,14 @@ extension HASlider {
         
         let location = touch.location(in: self)
         
-        // Get which handler touched
+        //Get which handler touched
         isTrackingLeftHanlder = isTouchLeftHandler(location: location)
         isTrackingRightHanlder = isTouchRightHandler(location:  location)
         
-        // Call delegates functions.
+        //Call delegates functions.
         delegate?.beginTracking(slider: self, isTrackingLeftHandler: isTrackingLeftHanlder, isTrackingRightHandler: isTrackingRightHanlder)
         
-        // Update Both Tip View postion.
+        //Update Both Tip View postion.
         updateLeftTipViewPosition()
         updateRightTipViewPosition()
         

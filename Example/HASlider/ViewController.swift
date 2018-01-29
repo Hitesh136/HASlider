@@ -21,12 +21,23 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //For show only one handler set disbable range true.And don't add right tip view.
+        /* if disablerange = true
+         slider.rightTipView = UIView()
+         slider.disableRange = true
+         
+         left value becomes main value
+         right selction color not active.
+        */
+        slider.disableRange = false
         
         //Set Left view over handler
         slider.leftTipView = leftView
         
         //Set Right view over handler
         slider.rightTipView = rightView
+        
+        
         //Set Round Corner of line
         slider.roundCorner = true
         

@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCU-oM-eHd" customClass="HASlider" customModule="HASlider">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCU-oM-eHd" customClass="HASlider" customModule="HASlider">
                                 <rect key="frame" x="20" y="233" width="335" height="200"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -51,7 +51,7 @@
                                         <color key="value" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="rightSelectionColor">
-                                        <color key="value" red="1" green="0.77717686320000001" blue="0.95475250869999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="roundCorner" value="NO"/>
                                 </userDefinedRuntimeAttributes>
@@ -105,11 +105,11 @@
                     <viewLayoutGuide key="safeArea" id="2kQ-JH-BdP"/>
                 </view>
                 <view contentMode="scaleToFill" id="u9e-zc-Eye" userLabel="rightView">
-                    <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
+                    <rect key="frame" x="0.0" y="0.0" width="50" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tzB-ze-ABZ">
-                            <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="100"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>

@@ -41,13 +41,20 @@ open class HASlider: UIControl {
     open var delegate: SliderDelegate?
     
     //MARK:- Line Variables
-    
     @IBInspectable
     var lineHeight: CGFloat = 2.0 {
         didSet {
             sliderLine.frame = CGRect(x: sliderLine.frame.origin.x, y: sliderLine.frame.origin.y, width: lineWidth, height: lineHeight)
             drawLeftHandler(addInView: false)
             drawRightHanlder(addInView: false)
+            updateLineCorner()
+        }
+    }
+    
+    @IBInspectable
+    open var roundCorner: Bool = false {
+        didSet {
+            updateLineCorner()
         }
     }
     
@@ -58,11 +65,14 @@ open class HASlider: UIControl {
         }
     }
     
+    
+    //MARK:- Values
     @IBInspectable
     open var minimumValue: CGFloat = 0.0
     
     @IBInspectable
     open var maximumValue: CGFloat = 10.0
+    
     
     @IBInspectable
     open var leftValue: CGFloat = 0.0 {
@@ -86,7 +96,7 @@ open class HASlider: UIControl {
         }
     }
     
-    //selection color from left side to left handler
+    //MARK:- Colors
     @IBInspectable
     open var leftSelectionColor: UIColor = UIColor.blue {
         didSet{
@@ -431,6 +441,18 @@ open class HASlider: UIControl {
         return (v1 / v2)
     }
     
+    func updateLineCorner() {
+        if roundCorner {
+            sliderLine.cornerRadius = lineHeight / 2
+            leftSelectionLine.cornerRadius = lineHeight / 2
+            rightSelectionLine.cornerRadius = lineHeight / 2
+        }
+        else {
+            sliderLine.cornerRadius = 0.0
+            leftSelectionLine.cornerRadius = 0.0
+            rightSelectionLine.cornerRadius = 0.0
+        }
+    }
 }
 
 //MARK:- Get Frames

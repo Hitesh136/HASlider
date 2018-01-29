@@ -55,7 +55,7 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="roundCorner" value="NO"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="leftValue">
-                                        <real key="value" value="0.0"/>
+                                        <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="rightValue">
                                         <real key="value" value="90"/>
@@ -136,6 +136,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_slider-circle" width="25" height="25"/>
+        <image name="ic_slider-circle" width="32" height="32"/>
     </resources>
 </document>

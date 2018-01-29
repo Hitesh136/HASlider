@@ -28,24 +28,13 @@ class ViewController: UIViewController {
          
          left value becomes main value
          right selction color not active.
-        */
-        slider.disableRange = false
+        */ 
         
         //Set Left view over handler
         slider.leftTipView = leftView
         
         //Set Right view over handler
         slider.rightTipView = rightView
-        
-        
-        //Set Round Corner of line
-        slider.roundCorner = true
-        
-        //Value of leftHanlder
-        slider.leftValue = 0
-        
-        //Value of RightHandler
-        slider.rightValue = 100
         
         //Text in left custom view
         lblLeft.text = String(format: "%d", Int(slider.leftValue))

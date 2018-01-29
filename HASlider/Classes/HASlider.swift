@@ -12,11 +12,17 @@ enum FrameTag: Int {
 }
 
 let KRightHandler = "RightHandlerTag"
+let kAlertLeftTipMinSpace = "HASLIDER --- Left Tip View has more height than available space. Increase view height for see left tip view"
+let kAlertRightTipMinSpace = "HASLIDER --- Right Tip View has more height than available space. Increase view height for see right tip view"
 
 @IBDesignable
 open class HASlider: UIControl {
     
+    //MARK:- IBOutlets
+    open var leftTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+    open var rightTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30)) 
     //MARK:- Variables
+
     var sliderLine = CALayer()
     var leftHandler = CALayer()
     var rightHandler = CALayer()
@@ -28,21 +34,6 @@ open class HASlider: UIControl {
     let handlerHigherZPosition:CGFloat = 4.0
     let slideLineZposition:CGFloat = 1.0
     let selectionLineZposition:CGFloat = 2.0
-    
-    open var leftTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30)) {
-        didSet {
-            leftTipView.layer.zPosition = 1
-            self.addSubview(leftTipView)
-            updateLeftTipViewPosition()
-        }
-    }
-    open var rightTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30)) {
-        didSet {
-            rightTipView.layer.zPosition = 1
-            self.addSubview(rightTipView)
-            updateRightTipViewPosition()
-        }
-    }
     
     open var delegate: SliderDelegate?
     
@@ -100,6 +91,28 @@ open class HASlider: UIControl {
         }
     }
     
+    @IBInspectable
+    open var leftHandlerImage: UIImage? = nil {
+        didSet{
+            if let image = leftHandlerImage {
+                let size = image.size
+                leftHandlerWidth = size.width
+                leftHandlerHeight = size.height
+            }
+        }
+    }
+    
+    @IBInspectable 
+    open var rightHandlerImage: UIImage? = nil {
+        didSet{
+            if let image = rightHandlerImage {
+                let size = image.size
+                rightHandlerWidth = size.width
+                rightHandlerHeight = size.height 
+            }
+        }
+    }
+    
     //MARK:- Colors
     @IBInspectable
     open var leftSelectionColor: UIColor = UIColor.blue {
@@ -141,7 +154,14 @@ open class HASlider: UIControl {
     @IBInspectable
     open var isRoundLine: Bool = false
     
-    var lineWidth: CGFloat = 2.0
+    var lineWidth: CGFloat {
+        get{
+            return self.frame.width
+        }
+        set {
+            lineWidth = newValue
+        }
+    }
     var lineY: CGFloat = 0.0
     var handlerY: CGFloat = 0.0
     
@@ -163,13 +183,13 @@ open class HASlider: UIControl {
     
     //MARK:- LeftHandler
     var leftHandlerPreviousLocation = CGPoint(x: 0.0, y: 0.0)
-    let leftHandlerWidth:CGFloat = 31.0
-    let leftHandlerHeight:CGFloat = 31.0
+    var leftHandlerWidth:CGFloat = 31.0
+    var leftHandlerHeight:CGFloat = 31.0
     var isTrackingLeftHanlder = false
     
     //MARK:- RightHandler
-    let rightHandlerWidth:CGFloat = 31.0
-    let rightHandlerHeight:CGFloat = 31.0
+    var rightHandlerWidth:CGFloat = 31.0
+    var rightHandlerHeight:CGFloat = 31.0
     var isTrackingRightHanlder = false
     var rightHandlerPreviousLocation = CGPoint(x: 0, y: 0 )
     
@@ -178,14 +198,16 @@ open class HASlider: UIControl {
     open var rightTitleView: UIView? = nil
     
     //MARK:- View LifeCycle
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        setup()
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
     }
     
     func setup() {
@@ -195,11 +217,16 @@ open class HASlider: UIControl {
         drawLeftSelectionLine()
         drawMiddleSelectionLine()
         drawRightSelectionLine()
+        
+        updateLeftHandlerPosition()
+        updateRightHandlerPosition()
+        
+        drawLeftTipView()
+        drawRightTipView()
     }
     
     //MARK:- Draw Methods
     func drawSliderLine() {
-        lineWidth = self.frame.width
         lineY = (frame.height - 45)
         sliderLine.frame = CGRect(x: 0, y: lineY, width: lineWidth, height: lineHeight)
         if isRoundLine {
@@ -213,11 +240,17 @@ open class HASlider: UIControl {
     func updateLeftHanlderFrame(addInView isAddSubLayer: Bool) {
         
         // Parameter isAddsublayer use to check if lefthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
+        
+        leftHandler.zPosition = handlerLowerZPosition
         leftHandler.frame = getHandlerFrame(forValue: leftValue)
         leftHandler.backgroundColor = leftHandlerColor.cgColor
         leftHandler.cornerRadius = (leftHandlerHeight / 2)
         leftHandlerPreviousLocation = CGPoint(x: leftHandler.frame.origin.x, y: handlerY)
-        leftHandler.zPosition = handlerLowerZPosition
+        
+        if let image = leftHandlerImage {
+            leftHandler.contents = image.cgImage
+            leftHandler.backgroundColor = UIColor.clear.cgColor
+        }
         
         if isAddSubLayer {
             self.layer.addSublayer(leftHandler)
@@ -226,12 +259,18 @@ open class HASlider: UIControl {
     
     func updateRightHanlderFrame(addInView isAddSubLayer: Bool = true ) {
         
-        // Parameter isAddsublayer use to check if lefthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
+        // Parameter isAddsublayer use to check if righthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
+        
+        rightHandler.zPosition = handlerLowerZPosition
         rightHandler.frame = getHandlerFrame(forValue: rightValue)
         rightHandler.backgroundColor = rightHandlerColor.cgColor
         rightHandler.cornerRadius = (rightHandlerHeight / 2)
         rightHandlerPreviousLocation = CGPoint(x: rightHandler.frame.origin.x, y: handlerY)
-        rightHandler.zPosition = handlerLowerZPosition
+        
+        if let image = rightHandlerImage {
+            rightHandler.contents = image.cgImage
+            rightHandler.backgroundColor = UIColor.clear.cgColor
+        }
         
         if isAddSubLayer {
             self.layer.setValue(FrameTag.tag_RightHandler, forKey: KRightHandler)
@@ -273,6 +312,36 @@ open class HASlider: UIControl {
         }
         rightSelectionLine.backgroundColor = rightSelectionColor.cgColor
         self.layer.addSublayer(rightSelectionLine)
+    }
+    
+    func drawLeftTipView() {
+        
+        let minY = leftHandler.frame.origin.y
+        let availableY = minY - 10.0
+        //Check if left tip view frame height is greater than available space.
+        if leftTipView.frame.height > availableY {
+            print(kAlertLeftTipMinSpace)
+            return
+        }
+        
+        leftTipView.layer.zPosition = 1
+        self.addSubview(leftTipView)
+        updateLeftTipViewPosition()
+    }
+    
+    func drawRightTipView() {
+        
+        let minY = rightHandler.frame.origin.y
+        let availableY = minY - 10.0
+        //Check if Right tip view frame height is greater than available space.
+        if rightHandler.frame.height > availableY {
+            print(kAlertRightTipMinSpace)
+            return
+        }
+        
+        rightTipView.layer.zPosition = 1
+        self.addSubview(rightTipView)
+        updateRightTipViewPosition()
     }
     
     //MARK:- Position Updates Methods

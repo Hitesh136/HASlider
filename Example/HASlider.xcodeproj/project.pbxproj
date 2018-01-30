@@ -13,6 +13,9 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		9D0A74592020CACF00AF0D7D /* slider2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9D0A74562020CACF00AF0D7D /* slider2.gif */; };
+		9D0A745A2020CACF00AF0D7D /* slider3.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9D0A74572020CACF00AF0D7D /* slider3.gif */; };
+		9D0A745B2020CACF00AF0D7D /* slider1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9D0A74582020CACF00AF0D7D /* slider1.gif */; };
 		C18DA84DB657DB133DC90C76 /* Pods_HASlider_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1880DC8CEE42B362392DC797 /* Pods_HASlider_Tests.framework */; };
 		D7BC74516911B7B1EBDA4428 /* Pods_HASlider_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6047F6DBF86EED80C99349BA /* Pods_HASlider_Example.framework */; };
 /* End PBXBuildFile section */
@@ -45,6 +48,9 @@
 		8A75F2D91975BD9A7113BEA4 /* Pods-HASlider_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HASlider_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HASlider_Example/Pods-HASlider_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		93B2FAEEE8FB0D397124F809 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		99F7298536861223C9CC7B61 /* Pods-HASlider_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HASlider_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HASlider_Tests/Pods-HASlider_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		9D0A74562020CACF00AF0D7D /* slider2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = slider2.gif; sourceTree = "<group>"; };
+		9D0A74572020CACF00AF0D7D /* slider3.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = slider3.gif; sourceTree = "<group>"; };
+		9D0A74582020CACF00AF0D7D /* slider1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = slider1.gif; sourceTree = "<group>"; };
 		A14E5368C7D7ABDA33F48B47 /* Pods-HASlider_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HASlider_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HASlider_Tests/Pods-HASlider_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EE673538E1033725C631D77E /* Pods-HASlider_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HASlider_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-HASlider_Example/Pods-HASlider_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,6 +98,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				9D0A74542020CA4D00AF0D7D /* Resources */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for HASlider */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -157,6 +164,24 @@
 				93B2FAEEE8FB0D397124F809 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		9D0A74542020CA4D00AF0D7D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9D0A74552020CA7700AF0D7D /* Gif */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9D0A74552020CA7700AF0D7D /* Gif */ = {
+			isa = PBXGroup;
+			children = (
+				9D0A74582020CACF00AF0D7D /* slider1.gif */,
+				9D0A74562020CACF00AF0D7D /* slider2.gif */,
+				9D0A74572020CACF00AF0D7D /* slider3.gif */,
+			);
+			path = Gif;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,7 +276,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D0A74592020CACF00AF0D7D /* slider2.gif in Resources */,
+				9D0A745B2020CACF00AF0D7D /* slider1.gif in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				9D0A745A2020CACF00AF0D7D /* slider3.gif in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);

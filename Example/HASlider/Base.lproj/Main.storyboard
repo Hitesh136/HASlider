@@ -75,10 +75,10 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKy-tQ-iSQ" customClass="HASlider" customModule="HASlider">
-                                <rect key="frame" x="20" y="240" width="335" height="130"/>
+                                <rect key="frame" x="20" y="240" width="335" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="130" id="2yC-HF-mJE"/>
+                                    <constraint firstAttribute="height" constant="120" id="2yC-HF-mJE"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="lineHeight">
@@ -113,15 +113,56 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bbv-2O-lNJ" customClass="HASlider" customModule="HASlider">
+                                <rect key="frame" x="20" y="360" width="335" height="120"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="f50-yt-FRg"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="disableRange" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="lineHeight">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="leftSelectionColor">
+                                        <color key="value" red="0.22312825920000001" green="0.75452393289999997" blue="0.93419986960000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="minimumValue">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="maximumValue">
+                                        <real key="value" value="100"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="lineBackgroundColor">
+                                        <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="middleSelectionColor">
+                                        <color key="value" red="0.83453887699999996" green="0.85882371660000001" blue="0.86715251209999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundCorner" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftValue">
+                                        <real key="value" value="50"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="rightSelectionColor">
+                                        <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="leftHandlerColor">
+                                        <color key="value" red="0.75251895189285278" green="0.29752147197723389" blue="0.33773040771484375" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dKy-tQ-iSQ" secondAttribute="trailing" constant="20" id="4HP-lQ-k8Z"/>
+                            <constraint firstItem="bbv-2O-lNJ" firstAttribute="top" secondItem="dKy-tQ-iSQ" secondAttribute="bottom" id="5z8-p9-BPR"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nCU-oM-eHd" secondAttribute="trailing" constant="20" id="Evz-dk-BxZ"/>
                             <constraint firstItem="dKy-tQ-iSQ" firstAttribute="top" secondItem="nCU-oM-eHd" secondAttribute="bottom" constant="20" id="Ima-BY-PpR"/>
                             <constraint firstItem="8Xh-Gn-467" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="K9p-df-jMY"/>
+                            <constraint firstItem="bbv-2O-lNJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="OqG-9o-66c"/>
                             <constraint firstItem="nCU-oM-eHd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Xfs-ej-CO4"/>
                             <constraint firstItem="nCU-oM-eHd" firstAttribute="top" secondItem="8Xh-Gn-467" secondAttribute="bottom" constant="10" id="fIt-uV-oCH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bbv-2O-lNJ" secondAttribute="trailing" constant="20" id="hrO-9k-D3C"/>
                             <constraint firstItem="dKy-tQ-iSQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="jPl-pe-hVE"/>
                             <constraint firstItem="8Xh-Gn-467" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rpP-iN-8oo"/>
                         </constraints>
@@ -132,12 +173,15 @@
                         <outlet property="lblLeft_Slider2" destination="Vbj-gy-XLk" id="7ab-Cw-DyO"/>
                         <outlet property="lblRight_Slider1" destination="tzB-ze-ABZ" id="6q8-NO-MwG"/>
                         <outlet property="lblRight_Slider2" destination="Unv-dI-sWf" id="Iae-pM-VUM"/>
+                        <outlet property="lblValue_Slider3" destination="042-KU-bc8" id="iq6-YG-hcc"/>
                         <outlet property="leftView_Slider1" destination="AOH-bD-skz" id="NjA-2t-uJ9"/>
                         <outlet property="leftView_Slider2" destination="mXi-0l-tgJ" id="tmn-ko-8rn"/>
                         <outlet property="rightView_Slider1" destination="u9e-zc-Eye" id="btl-Q5-ehK"/>
                         <outlet property="rightView_Slider2" destination="uWM-mX-12h" id="tBi-Hn-8YV"/>
                         <outlet property="slider1" destination="nCU-oM-eHd" id="DTC-XQ-iaj"/>
                         <outlet property="slider2" destination="dKy-tQ-iSQ" id="fcE-yH-li0"/>
+                        <outlet property="slider3" destination="bbv-2O-lNJ" id="d4j-iE-nvo"/>
+                        <outlet property="tipView_Slider3" destination="b1E-op-O2G" id="rc1-Kn-n8Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -235,10 +279,38 @@
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="qIx-OH-B46"/>
                 </view>
+                <view contentMode="scaleToFill" id="b1E-op-O2G">
+                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_BoxWithTip" translatesAutoresizingMaskIntoConstraints="NO" id="wv7-ov-0mm">
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="40" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="042-KU-bc8">
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="42"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="042-KU-bc8" firstAttribute="leading" secondItem="6tl-fm-bjF" secondAttribute="leading" id="Af6-aN-hkf"/>
+                        <constraint firstAttribute="trailing" secondItem="wv7-ov-0mm" secondAttribute="trailing" id="KCD-5I-NOs"/>
+                        <constraint firstItem="6tl-fm-bjF" firstAttribute="bottom" secondItem="042-KU-bc8" secondAttribute="bottom" constant="8" id="NBL-ZH-nNV"/>
+                        <constraint firstItem="wv7-ov-0mm" firstAttribute="top" secondItem="b1E-op-O2G" secondAttribute="top" id="R5c-WF-liI"/>
+                        <constraint firstItem="6tl-fm-bjF" firstAttribute="trailing" secondItem="042-KU-bc8" secondAttribute="trailing" id="ZdP-Iy-5vX"/>
+                        <constraint firstAttribute="bottom" secondItem="wv7-ov-0mm" secondAttribute="bottom" id="cVc-RK-YTi"/>
+                        <constraint firstItem="wv7-ov-0mm" firstAttribute="leading" secondItem="b1E-op-O2G" secondAttribute="leading" id="gHZ-Ov-rdG"/>
+                        <constraint firstItem="042-KU-bc8" firstAttribute="top" secondItem="6tl-fm-bjF" secondAttribute="top" id="lgq-Q8-eiT"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="6tl-fm-bjF"/>
+                </view>
             </objects>
         </scene>
     </scenes>
     <resources>
+        <image name="ic_BoxWithTip" width="32" height="32"/>
         <image name="ic_location" width="64" height="64"/>
         <image name="ic_location2" width="64" height="64"/>
         <image name="ic_red_black_circle" width="32" height="32"/>

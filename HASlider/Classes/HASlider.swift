@@ -162,6 +162,7 @@ open class HASlider: UIControl {
             lineWidth = newValue
         }
     }
+    
     var lineY: CGFloat = 0.0
     var handlerY: CGFloat = 0.0
     
@@ -171,6 +172,7 @@ open class HASlider: UIControl {
             if disableRange {
                 rightHandler.isHidden = true
                 rightTipView.isHidden = true
+                rightValue = maximumValue
                 rightSelectionLine.isHidden = true
             }
             else {
@@ -178,6 +180,7 @@ open class HASlider: UIControl {
                 rightTipView.isHidden = false
                 rightSelectionLine.isHidden = false
             }
+            layoutSubviews()
         }
     }
     
@@ -378,11 +381,21 @@ open class HASlider: UIControl {
         
         // Check if left handler cross right handler
         var newX = positionForValue(value: leftValue)
-        let rightHandlerX = rightHandler.frame.origin.x
         
-        // Stop lefthandler to reach ahead from right handler in right side
-        if newX >= rightHandlerX{
-            newX = rightHandlerX
+        if disableRange {
+            // if range is diable than check if handler reach don't reach beyond line.
+            let maximumX = sliderLine.frame.maxX - leftHandlerWidth
+            print(maximumX)
+            if newX >= maximumX {
+                newX = maximumX
+            }
+        }
+        else {
+            // Stop lefthandler to reach ahead from right handler in right side
+            let rightHandlerX = rightHandler.frame.origin.x
+            if newX >= rightHandlerX{
+                newX = rightHandlerX
+            }
         }
         
         //check if handler move outside line
@@ -399,7 +412,7 @@ open class HASlider: UIControl {
         
         var newX = positionForValue(value: rightValue)
         
-        //        Check if right handler cross left handler
+        //Check if right handler cross left handler
         if newX <= leftHandler.frame.origin.x {
             newX = leftHandler.frame.origin.x
         }
@@ -459,19 +472,31 @@ open class HASlider: UIControl {
         setup()
     }
     
-    func refreshLeftHanlder(touch: UITouch) {
+    func upateLeftValue(touch: UITouch) {
         
         let location = touch.location(in: self)
         
-        // 1. Determine by how much the user has dragged
+        //Determine by how much the user has dragged
         let deltaLocation = location.x - leftHandlerPreviousLocation.x
         let deltaValue = ( maximumValue - minimumValue ) * ( deltaLocation  / lineWidth )
         var newValue = leftValue + deltaValue
+        
+        //new value can't be less than minimumvalue
         if newValue <= minimumValue {
             newValue = minimumValue
         }
-        else if newValue >= rightValue {
-            newValue = rightValue
+        
+        if disableRange {
+            //If range is disable than new value can't be greater than maximum vlaue
+            if newValue >= maximumValue {
+                newValue = maximumValue
+            }
+        }
+        else {
+            //If range is enable than new value can't be greater than right value
+            if newValue >= rightValue {
+                newValue = rightValue
+            }
         }
         leftValue = newValue
     }
@@ -514,7 +539,7 @@ open class HASlider: UIControl {
         return false
     }
     
-    func refreshRightHandler(touch: UITouch) {
+    func updateRightValue(touch: UITouch) {
         let location = touch.location(in: self)
         
         // 1. Determine by how much the user has dragged
@@ -526,7 +551,7 @@ open class HASlider: UIControl {
         if newValue >= maximumValue {
             newValue = maximumValue
         }
-            //If new value in less than lefthanlder's value than assign left value in new value
+        //If new value in less than lefthanlder's value than assign left value in new value
         else if newValue <= leftValue {
             newValue = leftValue
         }
@@ -657,10 +682,10 @@ extension HASlider {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         if isTrackingLeftHanlder {
-            refreshLeftHanlder(touch: touch)
+            upateLeftValue(touch: touch)
         }
         else if isTrackingRightHanlder {
-            refreshRightHandler(touch: touch)
+            updateRightValue(touch: touch)
         }
         updateLeftSelectionLineWidth()
         updateMiddleSelectionLineWidth()

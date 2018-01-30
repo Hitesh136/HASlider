@@ -14,21 +14,21 @@ class ViewController: UIViewController {
     //View for first slider
     @IBOutlet var leftView_Slider1: UIView!
     @IBOutlet var rightView_Slider1: UIView!
-    
     @IBOutlet weak var lblLeft_Slider1: UILabel!
     @IBOutlet weak var lblRight_Slider1: UILabel!
-    
     @IBOutlet weak var slider1: HASlider!
     
     //View for second slider
     @IBOutlet weak var leftView_Slider2: UIView!
     @IBOutlet weak var rightView_Slider2: UIView!
-    
     @IBOutlet weak var lblLeft_Slider2: UILabel!
     @IBOutlet weak var lblRight_Slider2: UILabel!
-    
     @IBOutlet weak var slider2: HASlider!
     
+    //View for thired slider
+    @IBOutlet var tipView_Slider3: UIView!
+    @IBOutlet weak var slider3: HASlider!
+    @IBOutlet weak var lblValue_Slider3: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,10 +63,15 @@ class ViewController: UIViewController {
         slider2.leftTipView = leftView_Slider2
         slider2.rightTipView = rightView_Slider2
         
-        lblLeft_Slider2.text = String(format: "%d", Int(slider2.leftValue))
-        lblRight_Slider2.text = String(format: "%d", Int(slider2.rightValue))
+        lblLeft_Slider2.text = String(format: "%d AM", Int(slider2.leftValue))
+        lblRight_Slider2.text = String(format: "%d PM", Int(slider2.rightValue) - 12)
         
         slider2.delegate = self
+        
+        //Thired Slider
+        slider3.leftTipView = tipView_Slider3
+        lblValue_Slider3.text = String(format: "%d", Int(slider3.leftValue))
+        slider3.delegate = self
         
     }
     
@@ -76,6 +81,9 @@ class ViewController: UIViewController {
         
         slider2.leftValue = 0
         slider2.rightValue = 100
+        
+        slider3.leftValue = 0
+        slider3.rightValue = 100
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -89,26 +97,34 @@ class ViewController: UIViewController {
                 lblLeft_Slider1.text = String(format: "%d", Int(slider.leftValue))
             }
             else if slider == slider2 {
-                let value = Int(slider.leftValue)
+                var value = Int(slider.leftValue)
                 if value < 12 {
                     lblLeft_Slider2.text = String(format: "%d AM", value)
                 }
                 else if value >= 12 {
-                    lblLeft_Slider2.text = String(format: "%d PM", value)
+                    if value > 12 {
+                        value = value - 12
+                    }
+                    lblLeft_Slider2.text = String(format: "%d PM", value )
                 }
+            }
+            else if slider == slider3 {
+                lblValue_Slider3.text = String(format: "%d", Int(slider.leftValue))
             }
         }
         else if isTrackingRightHandler {
-            lblRight_Slider1.text = String(format: "%d", Int(slider.rightValue))
             if slider == slider1 {
-                lblRight_Slider1.text = String(format: "%d", Int(slider.leftValue))
+                lblRight_Slider1.text = String(format: "%d", Int(slider.rightValue))
             }
             else if slider == slider2 {
-                let value = Int(slider.leftValue)
+                var value = Int(slider.rightValue)
                 if value < 12 {
                     lblRight_Slider2.text = String(format: "%d AM", value)
                 }
                 else if value >= 12 {
+                    if value > 12 {
+                        value = value - 12
+                    }
                     lblRight_Slider2.text = String(format: "%d PM", value)
                 } 
             }

@@ -5,6 +5,9 @@
 [![License](https://img.shields.io/cocoapods/l/HASlider.svg?style=flat)](http://cocoapods.org/pods/HASlider)
 [![Platform](https://img.shields.io/cocoapods/p/HASlider.svg?style=flat)](http://cocoapods.org/pods/HASlider)
 
+## Overview
+HASlider provide slider with two handler and custom tip view over them. Developer has to pass his custom view in tip view. HASlider has delegates methods for track change in value and update tipview according to new value.
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -27,3 +30,5 @@ Hitesh136, agarwal.hitesh94@gmail.com
 ## License
 
 HASlider is available under the MIT license. See the LICENSE file for more info.
+
+

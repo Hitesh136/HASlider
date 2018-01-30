@@ -12,6 +12,10 @@ HASlider provide slider with two handler and custom tip view over them. Develope
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
+![](/Example/Resources/Gif/slider1.gif)
+![](/Example/Resources/Gif/slider2.gif)
+![](/Example/Resources/Gif/slider3.gif)
+
 ## Requirements
 
 ## Installation
@@ -30,5 +34,6 @@ Hitesh136, agarwal.hitesh94@gmail.com
 ## License
 
 HASlider is available under the MIT license. See the LICENSE file for more info.
+
 
 

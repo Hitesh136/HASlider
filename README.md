@@ -11,6 +11,14 @@ HASlider provide slider with two handler and custom tip view over them. Develope
 ## Requirements
 Swift 4, Xcode 9.0
 
+## Installation
+
+HASlider is available through [CocoaPods](http://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+pod 'HASlider'
+```
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -21,7 +29,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Usage
 
-Add UIView in interface builder and open it's identityinspector and set it's custom class as HASlider.
+Add UIView in interface builder and open its identityinspector and set its custom class as HASlider.
 
 ![](/Example/Resources/Images/ic_setup.png)
 ![](/Example/Resources/Images/ic_demo.png)
@@ -96,18 +104,9 @@ extension ViewController: SliderDelegate {
 }
 ```
 
-## Installation
-
-HASlider is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod 'HASlider'
-```
-
 ## Author
 
-Hitesh136, agarwal.hitesh94@gmail.com
+Hitesh Agarwal, agarwal.hitesh94@gmail.com
 
 ## License
 

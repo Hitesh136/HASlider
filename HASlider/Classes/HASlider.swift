@@ -1,42 +1,93 @@
 import UIKit
 import Foundation
 
+//MARK:- Protocol
 public protocol SliderDelegate {
     func beginTracking(slider: HASlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool)
     func continueTracking(slider: HASlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool)
     func endTracking(slider: HASlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool)
 }
 
+//MARK:- Enums
 enum FrameTag: Int {
     case tag_Line, tag_LeftHandler, tag_RightHandler, tag_LeftTipView, tag_RightTipView
 }
 
+//MARK:- Global Constant
 let KRightHandler = "RightHandlerTag"
 let kAlertLeftTipMinSpace = "HASLIDER --- Left Tip View has more height than available space. Increase view height for see left tip view"
 let kAlertRightTipMinSpace = "HASLIDER --- Right Tip View has more height than available space. Increase view height for see right tip view"
+let handlerLowerZPosition:CGFloat = 3.0
+let handlerHigherZPosition:CGFloat = 4.0
+let slideLineZposition:CGFloat = 1.0
+let selectionLineZposition:CGFloat = 2.0
 
 @IBDesignable
 open class HASlider: UIControl {
     
-    //MARK:- Variables
-
-    var sliderLine = CALayer()
+    //MARK:- Handler variables
     var leftHandler = CALayer()
     var rightHandler = CALayer()
-    var leftSelectionLine = CALayer()
-    var middleSelectionLine = CALayer()
-    var rightSelectionLine = CALayer()
+    var handlerY: CGFloat = 0.0
     
-    let handlerLowerZPosition:CGFloat = 3.0
-    let handlerHigherZPosition:CGFloat = 4.0
-    let slideLineZposition:CGFloat = 1.0
-    let selectionLineZposition:CGFloat = 2.0
+    var leftHandlerPreviousLocation = CGPoint(x: 0.0, y: 0.0)
+    var leftHandlerWidth:CGFloat = 31.0
+    var leftHandlerHeight:CGFloat = 31.0
+    var isTrackingLeftHanlder = false
     
-    open var delegate: SliderDelegate?
+    @IBInspectable
+    open var leftHandlerColor: UIColor = UIColor.gray {
+        didSet {
+            leftHandler.backgroundColor = leftHandlerColor.cgColor
+        }
+    }
+    
+    @IBInspectable
+    open var rightHandlerColor: UIColor = UIColor.gray {
+        didSet {
+            rightHandler.backgroundColor = rightHandlerColor.cgColor
+        }
+    }
+    
+    @IBInspectable
+    open var leftHandlerImage: UIImage? = nil {
+        didSet{
+            if let image = leftHandlerImage {
+                let size = image.size
+                leftHandlerWidth = size.width
+                leftHandlerHeight = size.height
+            }
+        }
+    }
+    
+    @IBInspectable
+    open var rightHandlerImage: UIImage? = nil {
+        didSet{
+            if let image = rightHandlerImage {
+                let size = image.size
+                rightHandlerWidth = size.width
+                rightHandlerHeight = size.height
+            }
+        }
+    }
+    
+    //MARK:- TipView Variables
     open var leftTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     open var rightTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     
     //MARK:- Line Variables
+    var sliderLine = CALayer()
+    var lineWidth: CGFloat {
+        get{
+            return self.frame.width
+        }
+        set {
+            self.lineWidth = newValue
+        }
+    }
+    
+    var lineY: CGFloat = 0.0
+    
     @IBInspectable
     var lineHeight: CGFloat = 2.0 {
         didSet {
@@ -61,8 +112,7 @@ open class HASlider: UIControl {
         }
     }
     
-    //MARK:- Values
-
+    //MARK:- Values Variables
     @IBInspectable
     open var minimumValue: CGFloat = 0.0
     
@@ -91,29 +141,10 @@ open class HASlider: UIControl {
         }
     }
     
-    @IBInspectable
-    open var leftHandlerImage: UIImage? = nil {
-        didSet{
-            if let image = leftHandlerImage {
-                let size = image.size
-                leftHandlerWidth = size.width
-                leftHandlerHeight = size.height
-            }
-        }
-    }
-    
-    @IBInspectable 
-    open var rightHandlerImage: UIImage? = nil {
-        didSet{
-            if let image = rightHandlerImage {
-                let size = image.size
-                rightHandlerWidth = size.width
-                rightHandlerHeight = size.height 
-            }
-        }
-    }
-    
-    //MARK:- Colors
+    //MARK:- Selection Variables
+    var leftSelectionLine = CALayer()
+    var middleSelectionLine = CALayer()
+    var rightSelectionLine = CALayer()
     @IBInspectable
     open var leftSelectionColor: UIColor = UIColor.blue {
         didSet{
@@ -137,32 +168,9 @@ open class HASlider: UIControl {
         }
     }
     
-    @IBInspectable
-    open var leftHandlerColor: UIColor = UIColor.gray {
-        didSet {
-            leftHandler.backgroundColor = leftHandlerColor.cgColor
-        }
-    }
     
-    @IBInspectable
-    open var rightHandlerColor: UIColor = UIColor.gray {
-        didSet {
-            rightHandler.backgroundColor = rightHandlerColor.cgColor
-        }
-    }
-    
-    var lineWidth: CGFloat {
-        get{
-            return self.frame.width
-        }
-        set {
-            lineWidth = newValue
-        }
-    }
-    
-    var lineY: CGFloat = 0.0
-    var handlerY: CGFloat = 0.0
-    
+    //MARK:- Other Variables
+    open var delegate: SliderDelegate?
     @IBInspectable
     open var disableRange: Bool = false {
         didSet {
@@ -180,12 +188,6 @@ open class HASlider: UIControl {
             layoutSubviews()
         }
     }
-    
-    //MARK:- LeftHandler
-    var leftHandlerPreviousLocation = CGPoint(x: 0.0, y: 0.0)
-    var leftHandlerWidth:CGFloat = 31.0
-    var leftHandlerHeight:CGFloat = 31.0
-    var isTrackingLeftHanlder = false
     
     //MARK:- RightHandler
     var rightHandlerWidth:CGFloat = 31.0
@@ -225,7 +227,61 @@ open class HASlider: UIControl {
         drawRightTipView()
     }
     
-    //MARK:- Draw Methods
+    func reload() {
+        leftValue = minimumValue
+        rightValue = maximumValue
+        setup()
+    }
+    
+    func isTouchRightHandler(location: CGPoint) -> Bool {
+        
+        //Check if slider type in single handler
+        if disableRange {
+            return false
+        }
+        
+        let totalX = rightHandler.frame.origin.x + rightHandler.frame.width
+        let totalY = rightHandler.frame.origin.y + rightHandler.frame.height
+        
+        // Check if left Handler above right handler
+        if leftHandler.zPosition > rightHandler.zPosition {
+            return false
+        }
+        
+        // if touch location inside handler frame
+        if ( location.x >= rightHandler.frame.origin.x && location.x <= totalX ) &&  ( location.y >= rightHandler.frame.origin.y && location.y <= totalY ){
+            return true
+        }
+        return false
+    }
+    
+    func isTouchLeftHandler(location: CGPoint) -> Bool {
+        let totalX = leftHandler.frame.origin.x + leftHandler.frame.width
+        let totalY = leftHandler.frame.origin.y + leftHandler.frame.height
+        
+        //Check if right handler is above left handler
+        if leftHandler.zPosition < rightHandler.zPosition {
+            return false
+        }
+        
+        // if touch location inside handler frame
+        if (location.x >= leftHandler.frame.origin.x && location.x <= totalX) && ( location.y >= leftHandler.frame.origin.y && location.y <= totalY ) {
+            return true
+        }
+        return false
+    }
+    
+    //MARK:- Value Functions
+    func positionForValue(value: CGFloat) -> CGFloat {
+        let v1 = (lineWidth - leftHandlerWidth) * (value - minimumValue)
+        let v2 = (maximumValue - minimumValue)
+        return (v1 / v2)
+    }
+}
+
+//MARK:- Draw Frames
+extension HASlider {
+    
     func drawSliderLine() {
         lineY = (frame.height - 45)
         sliderLine.frame = CGRect(x: 0, y: lineY, width: lineWidth, height: lineHeight)
@@ -235,47 +291,6 @@ open class HASlider: UIControl {
         sliderLine.backgroundColor = lineBackgroundColor.cgColor
         sliderLine.zPosition = slideLineZposition
         self.layer.addSublayer(sliderLine)
-    }
-    
-    func updateLeftHanlderFrame(addInView isAddSubLayer: Bool) {
-        
-        // Parameter isAddsublayer use to check if lefthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
-        
-        leftHandler.zPosition = handlerLowerZPosition
-        leftHandler.frame = getHandlerFrame(forValue: leftValue)
-        leftHandler.backgroundColor = leftHandlerColor.cgColor
-        leftHandler.cornerRadius = (leftHandlerHeight / 2)
-        leftHandlerPreviousLocation = CGPoint(x: leftHandler.frame.origin.x, y: handlerY)
-        
-        if let image = leftHandlerImage {
-            leftHandler.contents = image.cgImage
-            leftHandler.backgroundColor = UIColor.clear.cgColor
-        }
-        
-        if isAddSubLayer {
-            self.layer.addSublayer(leftHandler)
-        }
-    }
-    
-    func updateRightHanlderFrame(addInView isAddSubLayer: Bool = true ) {
-        
-        // Parameter isAddsublayer use to check if righthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
-        
-        rightHandler.zPosition = handlerLowerZPosition
-        rightHandler.frame = getHandlerFrame(forValue: rightValue)
-        rightHandler.backgroundColor = rightHandlerColor.cgColor
-        rightHandler.cornerRadius = (rightHandlerHeight / 2)
-        rightHandlerPreviousLocation = CGPoint(x: rightHandler.frame.origin.x, y: handlerY)
-        
-        if let image = rightHandlerImage {
-            rightHandler.contents = image.cgImage
-            rightHandler.backgroundColor = UIColor.clear.cgColor
-        }
-        
-        if isAddSubLayer {
-            self.layer.setValue(FrameTag.tag_RightHandler, forKey: KRightHandler)
-            self.layer.addSublayer(rightHandler)
-        }
     }
     
     func drawLeftSelectionLine() {
@@ -344,244 +359,14 @@ open class HASlider: UIControl {
         updateRightTipViewPosition()
     }
     
-    //MARK:- Position Updates Methods
-    func updateLeftTipViewPosition() {
-        
-        let xPosition = positionForValue(value: leftValue)
-        updateZpositionOfHandler()
-        if xPosition <= sliderLine.frame.origin.x {
-            leftTipView.center.x = sliderLine.frame.origin.x + (leftHandlerWidth / 2)
-        }
-        else {
-            leftTipView.center.x = xPosition + (leftHandlerWidth / 2)
-        }
-    }
-    
-    func updateRightTipViewPosition() {
-        
-        //if range is disable than rightTipView is not visible
-        if disableRange {
-            return
-        }
-        
-        let xPosition = positionForValue(value: rightValue)
-        updateZpositionOfHandler()
-        if xPosition >= lineWidth {
-            rightTipView.center.x = lineWidth - (leftHandlerWidth / 2)
-        }
-        else {
-            rightTipView.center.x = xPosition + (leftHandlerWidth / 2 )
-        }
-    }
-    
-    func updateLeftHandlerPosition(){
-        
-        // Check if left handler cross right handler
-        var newX = positionForValue(value: leftValue)
-        
-        if disableRange {
-            // if range is diable than check if handler reach don't reach beyond line.
-            let maximumX = sliderLine.frame.maxX - leftHandlerWidth
-            print(maximumX)
-            if newX >= maximumX {
-                newX = maximumX
-            }
-        }
-        else {
-            // Stop lefthandler to reach ahead from right handler in right side
-            let rightHandlerX = rightHandler.frame.origin.x
-            if newX >= rightHandlerX{
-                newX = rightHandlerX
-            }
-        }
-        
-        //check if handler move outside line
-        if newX <= sliderLine.frame.minX {
-            newX = sliderLine.frame.minX
-        }
-        
-        //update previous location of left hanlder
-        leftHandlerPreviousLocation = CGPoint(x: newX + (leftHandlerWidth / 2), y: leftHandlerPreviousLocation.y)
-        leftHandler.frame.origin.x = newX
-    }
-    
-    func updateRightHandlerPosition() {
-        
-        var newX = positionForValue(value: rightValue)
-        
-        //Check if right handler cross left handler
-        if newX <= leftHandler.frame.origin.x {
-            newX = leftHandler.frame.origin.x
-        }
-        
-        //Check if hanlder move outside line
-        let maxX = sliderLine.frame.maxX + (leftHandlerWidth / 2)
-        if newX >= maxX {
-            newX = maxX
-        }
-        
-        //update handler previos location
-        rightHandlerPreviousLocation = CGPoint(x: newX + (leftHandlerWidth / 2), y: rightHandlerPreviousLocation.y)
-        rightHandler.frame.origin.x = newX
-    }
-    
-    func updateLeftSelectionLineWidth() {
-        leftSelectionLine.frame = getLeftSelectionLineFrame()
-    }
-    
-    func updateMiddleSelectionLineWidth() {
-        middleSelectionLine.frame = getMiddleSelectionFrame()
-    }
-    
-    func updateRightSelectionLineWidth() {
-        rightSelectionLine.frame = getRightSelectionFrame()
-    }
-    
-    func updateZpositionOfHandler() {
-        let leftMaxX = leftTipView.frame.origin.x + leftTipView.frame.width
-        let rightMinx = rightTipView.frame.origin.x
-        if leftMaxX > rightMinx {
-            if isTrackingLeftHanlder {
-                leftTipView.layer.zPosition = handlerHigherZPosition
-                rightTipView.layer.zPosition = handlerLowerZPosition
-                leftHandler.zPosition = handlerHigherZPosition
-                rightHandler.zPosition = handlerLowerZPosition
-            }
-            else if isTrackingRightHanlder {
-                leftTipView.layer.zPosition = handlerLowerZPosition
-                rightTipView.layer.zPosition = handlerHigherZPosition
-                leftHandler.zPosition = handlerLowerZPosition
-                rightHandler.zPosition = handlerHigherZPosition
-            }
-        }
-        else {
-            leftTipView.layer.zPosition = handlerLowerZPosition
-            rightTipView.layer.zPosition = handlerLowerZPosition
-            leftHandler.zPosition = handlerLowerZPosition
-            rightHandler.zPosition = handlerLowerZPosition
-        }
-    }
-    
-    //MARK:- Refresh Methods.
-    func reload() {
-        leftValue = minimumValue
-        rightValue = maximumValue
-        setup()
-    }
-    
-    func upateLeftValue(touch: UITouch) {
-        
-        let location = touch.location(in: self)
-        
-        //Determine by how much the user has dragged
-        let deltaLocation = location.x - leftHandlerPreviousLocation.x
-        let deltaValue = ( maximumValue - minimumValue ) * ( deltaLocation  / lineWidth )
-        var newValue = leftValue + deltaValue
-        
-        //new value can't be less than minimumvalue
-        if newValue <= minimumValue {
-            newValue = minimumValue
-        }
-        
-        if disableRange {
-            //If range is disable than new value can't be greater than maximum vlaue
-            if newValue >= maximumValue {
-                newValue = maximumValue
-            }
-        }
-        else {
-            //If range is enable than new value can't be greater than right value
-            if newValue >= rightValue {
-                newValue = rightValue
-            }
-        }
-        leftValue = newValue
-    }
-    
-    func isTouchRightHandler(location: CGPoint) -> Bool {
-        
-        //Check if slider type in single handler
-        if disableRange {
-            return false
-        }
-        
-        let totalX = rightHandler.frame.origin.x + rightHandler.frame.width
-        let totalY = rightHandler.frame.origin.y + rightHandler.frame.height
-        
-        // Check if left Handler above right handler
-        if leftHandler.zPosition > rightHandler.zPosition {
-            return false
-        }
-        
-        // if touch location inside handler frame
-        if ( location.x >= rightHandler.frame.origin.x && location.x <= totalX ) &&  ( location.y >= rightHandler.frame.origin.y && location.y <= totalY ){
-            return true
-        }
-        return false
-    }
-    
-    func isTouchLeftHandler(location: CGPoint) -> Bool {
-        let totalX = leftHandler.frame.origin.x + leftHandler.frame.width
-        let totalY = leftHandler.frame.origin.y + leftHandler.frame.height
-        
-        //Check if right handler is above left handler
-        if leftHandler.zPosition < rightHandler.zPosition {
-            return false
-        }
-        
-        // if touch location inside handler frame
-        if (location.x >= leftHandler.frame.origin.x && location.x <= totalX) && ( location.y >= leftHandler.frame.origin.y && location.y <= totalY ) {
-            return true
-        }
-        return false
-    }
-    
-    func updateRightValue(touch: UITouch) {
-        let location = touch.location(in: self)
-        
-        // 1. Determine by how much the user has dragged
-        let deltaLocation = location.x - rightHandlerPreviousLocation.x
-        let deltaValue = (maximumValue - minimumValue) * deltaLocation  / (lineWidth + (rightHandlerWidth / 2))
-        var newValue = rightValue + deltaValue
-        
-        //If new value greater than equal to maximum value than assign maximum value in new value
-        if newValue >= maximumValue {
-            newValue = maximumValue
-        }
-        //If new value in less than lefthanlder's value than assign left value in new value
-        else if newValue <= leftValue {
-            newValue = leftValue
-        }
-        rightValue = newValue
-    }
-    
-    //MARK:- Value Functions
-    func positionForValue(value: CGFloat) -> CGFloat {
-        let v1 = (lineWidth - leftHandlerWidth) * (value - minimumValue)
-        let v2 = (maximumValue - minimumValue)
-        return (v1 / v2)
-    }
-    
-    func updateLineCorner() {
-        if roundCorner {
-            sliderLine.cornerRadius = lineHeight / 2
-            middleSelectionLine.cornerRadius = lineHeight / 2
-            leftSelectionLine.cornerRadius = lineHeight / 2
-            rightSelectionLine.cornerRadius = lineHeight / 2
-        }
-        else {
-            sliderLine.cornerRadius = 0.0
-            leftSelectionLine.cornerRadius = 0.0
-            middleSelectionLine.cornerRadius = 0.0
-            rightSelectionLine.cornerRadius = 0.0
-        }
-    }
 }
 
 //MARK:- Get Frames
 extension HASlider {
     
+    //Handlers frame
     func getHandlerFrame(forValue value: CGFloat) -> CGRect{
+        
         let handlerX = positionForValue(value: value)
         handlerY = (lineY + (lineHeight / 2 )) - (leftHandlerHeight / 2)
         return CGRect(x: handlerX, y: handlerY, width: leftHandlerWidth, height: leftHandlerHeight)
@@ -638,7 +423,236 @@ extension HASlider {
     }
 }
 
-//MARK:- Touch Events Delegates
+//MARK:- Update Frames
+extension HASlider {
+    
+    //Update tip positions
+    func updateLeftTipViewPosition() {
+        
+        let xPosition = positionForValue(value: leftValue)
+        updateZpositionOfHandler()
+        if xPosition <= sliderLine.frame.origin.x {
+            leftTipView.center.x = sliderLine.frame.origin.x + (leftHandlerWidth / 2)
+        }
+        else {
+            leftTipView.center.x = xPosition + (leftHandlerWidth / 2)
+        }
+    }
+    
+    func updateRightTipViewPosition() {
+        
+        //if range is disable than rightTipView is not visible
+        if disableRange {
+            return
+        }
+        
+        let xPosition = positionForValue(value: rightValue)
+        updateZpositionOfHandler()
+        if xPosition >= lineWidth {
+            rightTipView.center.x = lineWidth - (leftHandlerWidth / 2)
+        }
+        else {
+            rightTipView.center.x = xPosition + (leftHandlerWidth / 2 )
+        }
+    }
+    
+    //Update handler positions
+    func updateLeftHandlerPosition(){
+        
+        // Check if left handler cross right handler
+        var newX = positionForValue(value: leftValue)
+        
+        if disableRange {
+            // if range is diable than check if handler reach don't reach beyond line.
+            let maximumX = sliderLine.frame.maxX - leftHandlerWidth
+            print(maximumX)
+            if newX >= maximumX {
+                newX = maximumX
+            }
+        }
+        else {
+            // Stop lefthandler to reach ahead from right handler in right side
+            let rightHandlerX = rightHandler.frame.origin.x
+            if newX >= rightHandlerX{
+                newX = rightHandlerX
+            }
+        }
+        
+        //check if handler move outside line
+        if newX <= sliderLine.frame.minX {
+            newX = sliderLine.frame.minX
+        }
+        
+        //update previous location of left hanlder
+        leftHandlerPreviousLocation = CGPoint(x: newX + (leftHandlerWidth / 2), y: leftHandlerPreviousLocation.y)
+        leftHandler.frame.origin.x = newX
+    }
+    
+    func updateRightHandlerPosition() {
+        
+        var newX = positionForValue(value: rightValue)
+        
+        //Check if right handler cross left handler
+        if newX <= leftHandler.frame.origin.x {
+            newX = leftHandler.frame.origin.x
+        }
+        
+        //Check if hanlder move outside line
+        let maxX = sliderLine.frame.maxX + (leftHandlerWidth / 2)
+        if newX >= maxX {
+            newX = maxX
+        }
+        
+        //update handler previos location
+        rightHandlerPreviousLocation = CGPoint(x: newX + (leftHandlerWidth / 2), y: rightHandlerPreviousLocation.y)
+        rightHandler.frame.origin.x = newX
+    }
+    //Update Selection lines width
+    func updateLeftSelectionLineWidth() {
+        leftSelectionLine.frame = getLeftSelectionLineFrame()
+    }
+    
+    func updateMiddleSelectionLineWidth() {
+        middleSelectionLine.frame = getMiddleSelectionFrame()
+    }
+    
+    func updateRightSelectionLineWidth() {
+        rightSelectionLine.frame = getRightSelectionFrame()
+    }
+    
+    func updateZpositionOfHandler() {
+        let leftMaxX = leftTipView.frame.origin.x + leftTipView.frame.width
+        let rightMinx = rightTipView.frame.origin.x
+        if leftMaxX > rightMinx {
+            if isTrackingLeftHanlder {
+                leftTipView.layer.zPosition = handlerHigherZPosition
+                rightTipView.layer.zPosition = handlerLowerZPosition
+                leftHandler.zPosition = handlerHigherZPosition
+                rightHandler.zPosition = handlerLowerZPosition
+            }
+            else if isTrackingRightHanlder {
+                leftTipView.layer.zPosition = handlerLowerZPosition
+                rightTipView.layer.zPosition = handlerHigherZPosition
+                leftHandler.zPosition = handlerLowerZPosition
+                rightHandler.zPosition = handlerHigherZPosition
+            }
+        }
+        else {
+            leftTipView.layer.zPosition = handlerLowerZPosition
+            rightTipView.layer.zPosition = handlerLowerZPosition
+            leftHandler.zPosition = handlerLowerZPosition
+            rightHandler.zPosition = handlerLowerZPosition
+        }
+    }
+    //Update value
+    func upateLeftValue(touch: UITouch) {
+        
+        let location = touch.location(in: self)
+        
+        //Determine by how much the user has dragged
+        let deltaLocation = location.x - leftHandlerPreviousLocation.x
+        let deltaValue = ( maximumValue - minimumValue ) * ( deltaLocation  / lineWidth )
+        var newValue = leftValue + deltaValue
+        
+        //new value can't be less than minimumvalue
+        if newValue <= minimumValue {
+            newValue = minimumValue
+        }
+        
+        if disableRange {
+            //If range is disable than new value can't be greater than maximum vlaue
+            if newValue >= maximumValue {
+                newValue = maximumValue
+            }
+        }
+        else {
+            //If range is enable than new value can't be greater than right value
+            if newValue >= rightValue {
+                newValue = rightValue
+            }
+        }
+        leftValue = newValue
+    }
+    
+    func updateRightValue(touch: UITouch) {
+        let location = touch.location(in: self)
+        
+        // 1. Determine by how much the user has dragged
+        let deltaLocation = location.x - rightHandlerPreviousLocation.x
+        let deltaValue = (maximumValue - minimumValue) * deltaLocation  / (lineWidth + (rightHandlerWidth / 2))
+        var newValue = rightValue + deltaValue
+        
+        //If new value greater than equal to maximum value than assign maximum value in new value
+        if newValue >= maximumValue {
+            newValue = maximumValue
+        }
+            //If new value in less than lefthanlder's value than assign left value in new value
+        else if newValue <= leftValue {
+            newValue = leftValue
+        }
+        rightValue = newValue
+    }
+    
+    func updateLineCorner() {
+        if roundCorner {
+            sliderLine.cornerRadius = lineHeight / 2
+            middleSelectionLine.cornerRadius = lineHeight / 2
+            leftSelectionLine.cornerRadius = lineHeight / 2
+            rightSelectionLine.cornerRadius = lineHeight / 2
+        }
+        else {
+            sliderLine.cornerRadius = 0.0
+            leftSelectionLine.cornerRadius = 0.0
+            middleSelectionLine.cornerRadius = 0.0
+            rightSelectionLine.cornerRadius = 0.0
+        }
+    }
+
+    //Update handler frames
+    func updateLeftHanlderFrame(addInView isAddSubLayer: Bool) {
+        
+        // Parameter isAddsublayer use to check if lefthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
+        
+        leftHandler.zPosition = handlerLowerZPosition
+        leftHandler.frame = getHandlerFrame(forValue: leftValue)
+        leftHandler.backgroundColor = leftHandlerColor.cgColor
+        leftHandler.cornerRadius = (leftHandlerHeight / 2)
+        leftHandlerPreviousLocation = CGPoint(x: leftHandler.frame.origin.x, y: handlerY)
+        
+        if let image = leftHandlerImage {
+            leftHandler.contents = image.cgImage
+            leftHandler.backgroundColor = UIColor.clear.cgColor
+        }
+        
+        if isAddSubLayer {
+            self.layer.addSublayer(leftHandler)
+        }
+    }
+    
+    func updateRightHanlderFrame(addInView isAddSubLayer: Bool = true ) {
+        
+        // Parameter isAddsublayer use to check if righthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
+        
+        rightHandler.zPosition = handlerLowerZPosition
+        rightHandler.frame = getHandlerFrame(forValue: rightValue)
+        rightHandler.backgroundColor = rightHandlerColor.cgColor
+        rightHandler.cornerRadius = (rightHandlerHeight / 2)
+        rightHandlerPreviousLocation = CGPoint(x: rightHandler.frame.origin.x, y: handlerY)
+        
+        if let image = rightHandlerImage {
+            rightHandler.contents = image.cgImage
+            rightHandler.backgroundColor = UIColor.clear.cgColor
+        }
+        
+        if isAddSubLayer {
+            self.layer.setValue(FrameTag.tag_RightHandler, forKey: KRightHandler)
+            self.layer.addSublayer(rightHandler)
+        }
+    }
+    
+}
+
+//MARK:- Touch EventsDelegates
 extension HASlider {
     
     override open func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {

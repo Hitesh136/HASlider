@@ -18,9 +18,6 @@ let kAlertRightTipMinSpace = "HASLIDER --- Right Tip View has more height than a
 @IBDesignable
 open class HASlider: UIControl {
     
-    //MARK:- IBOutlets
-    open var leftTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-    open var rightTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30)) 
     //MARK:- Variables
 
     var sliderLine = CALayer()
@@ -36,6 +33,8 @@ open class HASlider: UIControl {
     let selectionLineZposition:CGFloat = 2.0
     
     open var delegate: SliderDelegate?
+    open var leftTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+    open var rightTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     
     //MARK:- Line Variables
     @IBInspectable
@@ -63,11 +62,12 @@ open class HASlider: UIControl {
     }
     
     //MARK:- Values
+
     @IBInspectable
     open var minimumValue: CGFloat = 0.0
     
     @IBInspectable
-    open var maximumValue: CGFloat = 10.0
+    open var maximumValue: CGFloat = 100.0
     
     @IBInspectable
     open var leftValue: CGFloat = 0.0 {
@@ -151,9 +151,6 @@ open class HASlider: UIControl {
         }
     }
     
-    @IBInspectable
-    open var isRoundLine: Bool = false
-    
     var lineWidth: CGFloat {
         get{
             return self.frame.width
@@ -232,7 +229,7 @@ open class HASlider: UIControl {
     func drawSliderLine() {
         lineY = (frame.height - 45)
         sliderLine.frame = CGRect(x: 0, y: lineY, width: lineWidth, height: lineHeight)
-        if isRoundLine {
+        if roundCorner {
             sliderLine.cornerRadius = lineHeight / 2
         }
         sliderLine.backgroundColor = lineBackgroundColor.cgColor
@@ -286,7 +283,7 @@ open class HASlider: UIControl {
         leftSelectionLine.frame = getLeftSelectionLineFrame()
         leftSelectionLine.zPosition = selectionLineZposition
         
-        if isRoundLine {
+        if roundCorner {
             leftSelectionLine.cornerRadius = lineHeight / 2
         }
         leftSelectionLine.backgroundColor = leftSelectionColor.cgColor
@@ -297,7 +294,7 @@ open class HASlider: UIControl {
         
         middleSelectionLine.frame = getMiddleSelectionFrame()
         middleSelectionLine.zPosition = selectionLineZposition
-        if isRoundLine {
+        if roundCorner {
             middleSelectionLine.cornerRadius = lineHeight / 2
         }
         middleSelectionLine.zPosition = selectionLineZposition
@@ -310,7 +307,7 @@ open class HASlider: UIControl {
         rightSelectionLine.frame = getRightSelectionFrame()
         rightSelectionLine.zPosition = selectionLineZposition
         
-        if isRoundLine {
+        if roundCorner {
             rightSelectionLine.cornerRadius = lineHeight / 2
         }
         rightSelectionLine.backgroundColor = rightSelectionColor.cgColor

@@ -41,7 +41,7 @@ class ViewController: UIViewController {
          right selction color not active.
         */ 
         
-        // First Slider
+        // First Slider 
         
         //Set Left view over handler
         slider1.leftTipView = leftView_Slider1
@@ -147,3 +147,23 @@ extension ViewController: SliderDelegate {
     
 }
 
+
+/*
+
+// isTrackingLeftHandler = check if tracking left handler
+// isTrackingRightHandler = check if tracking right handler
+extension ViewController: SliderDelegate {
+    func beginTracking(slider: HASlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool) {
+        // Begin tracking of handler
+    }
+    
+    func continueTracking(slider: HASlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool) {
+        // continuously moving handler
+    }
+    
+    func endTracking(slider: HASlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool) {
+        // Stop moving handler
+    }
+    
+}
+*/

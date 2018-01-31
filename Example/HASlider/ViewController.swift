@@ -57,7 +57,7 @@ class ViewController: UIViewController {
         
         //Delegte to get callback of slider touch events.
         slider1.delegate = self
-        
+        slider1.lineHeight = 10.0
         //Second Slider
         
         slider2.leftTipView = leftView_Slider2

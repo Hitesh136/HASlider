@@ -23,7 +23,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 Add UIView in interface builder and open it's identityinspector and set it's custom class as HASlider.
 
-//ImageUrl
+![](/Example/Resources/Images/ic_setup.png)
+![](/Example/Resources/Images/ic_demo.png)
 
 Set it's property in interface builder or programmatically.
 

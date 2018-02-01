@@ -163,6 +163,7 @@ open class HAVerticalSlider: UIControl {
     
     
     //MARK:- Other Variables
+    @IBInspectable
     open var isRightAlign: Bool = false {
         didSet {
             layoutSubviews()
@@ -272,9 +273,15 @@ open class HAVerticalSlider: UIControl {
 //MARK:- Draw Frames
 extension HAVerticalSlider {
     
-   fileprivate  func drawSliderLine() {
+    fileprivate func drawSliderLine() {
+        
+        if isRightAlign {
+            lineX = frame.width - 20.0
+        }
+        else {
+            lineX = 20.0
+        }
     
-        lineX = 20.0
         lineY = 0.0
         lineHeight = self.frame.height
     
@@ -288,6 +295,7 @@ extension HAVerticalSlider {
     }
     
     fileprivate func drawTopSelectionLine() {
+        
         
         topSelectionLine.frame = getTopSelectionLineFrame()
         topSelectionLine.zPosition = selectionLineZposition
@@ -324,9 +332,17 @@ extension HAVerticalSlider {
     }
     
     fileprivate func drawTopTipView() {
-    
-        let minX = topHandler.frame.origin.x + topHandlerWidth + 30.0
-        let availableX = frame.width - minX
+     
+        var minX: CGFloat = 0.0
+        var availableX: CGFloat = 0.0
+        if isRightAlign {
+            minX = 0.0
+            availableX = topHandler.frame.origin.x
+        }
+        else {
+            minX = topHandler.frame.origin.x + topHandlerWidth
+            availableX = frame.width - minX
+        }
         //Check if top tip view frame height is greater than available space.
         if topTipView.frame.width > availableX {
             print(kAlertLeftTipMinSpace)
@@ -341,8 +357,17 @@ extension HAVerticalSlider {
     
     fileprivate func drawBottomTipView() {
         
-        let minX = bottomHandler.frame.origin.x + bottomHandlerWidth +  30.0
-        let availableX = frame.width - minX
+        var minX: CGFloat = 0.0
+        var availableX: CGFloat = 0.0
+        if isRightAlign {
+            availableX = bottomHandler.frame.origin.x
+        }
+        else {
+            minX = bottomHandler.frame.origin.x + bottomHandlerWidth
+            availableX = frame.width - minX
+            
+        }
+        
         //Check if top tip view frame height is greater than available space.
         if bottomTipView.frame.width > availableX {
             print(kAlertRightTipMinSpace)

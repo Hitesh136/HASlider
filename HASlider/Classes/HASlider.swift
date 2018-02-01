@@ -159,6 +159,8 @@ open class HASlider: UIControl {
     
     
     //MARK:- Other Variables
+  
+    
     open var delegate: SliderDelegate?
     @IBInspectable
     open var disableRange: Bool = false {

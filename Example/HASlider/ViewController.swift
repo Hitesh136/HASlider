@@ -31,16 +31,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var lblValue_Slider3: UILabel!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        //For show only one handler set disbable range true.And don't add right tip view.
-        /* if disablerange = true
-         slider.rightTipView = UIView()
-         slider.disableRange = true
-         
-         left value becomes main value
-         right selction color not active.
-        */ 
-        
+        super.viewDidLoad() 
         // First Slider 
         
         //Set Left view over handler
@@ -56,8 +47,7 @@ class ViewController: UIViewController {
         lblRight_Slider1.text = String(format: "%d", Int(slider1.rightValue))
         
         //Delegte to get callback of slider touch events.
-        slider1.delegate = self
-        slider1.lineHeight = 10.0
+        slider1.delegate = self 
         //Second Slider
         
         slider2.leftTipView = leftView_Slider2
@@ -85,6 +75,7 @@ class ViewController: UIViewController {
         slider3.leftValue = 0
         slider3.rightValue = 100
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -143,27 +134,6 @@ extension ViewController: SliderDelegate {
     
     func endTracking(slider: HASlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool) {
         updateValue(ofSlider: slider, isTrackingLeftHandler: isTrackingLeftHandler, isTrackingRightHandler: isTrackingRightHandler)
-    }
-    
+    } 
 }
 
-
-/*
-
-// isTrackingLeftHandler = check if tracking left handler
-// isTrackingRightHandler = check if tracking right handler
-extension ViewController: SliderDelegate {
-    func beginTracking(slider: HASlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool) {
-        // Begin tracking of handler
-    }
-    
-    func continueTracking(slider: HASlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool) {
-        // continuously moving handler
-    }
-    
-    func endTracking(slider: HASlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool) {
-        // Stop moving handler
-    }
-    
-}
-*/

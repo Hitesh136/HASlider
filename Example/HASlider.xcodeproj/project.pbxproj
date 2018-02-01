@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4A82BD4020219EB700959D21 /* ic_demo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A82BD3F20219EB700959D21 /* ic_demo.png */; };
 		4A82BD422021EA5C00959D21 /* ic_setup.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A82BD412021EA5C00959D21 /* ic_setup.png */; };
+		4A88A5C32023217900C0AC4E /* VerticalSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A88A5C22023217900C0AC4E /* VerticalSliderViewController.swift */; };
+		4A88A5C42023219600C0AC4E /* HASlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A88A5C52023219600C0AC4E /* HASlider.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -37,6 +39,8 @@
 		231128EB586FF78F69BCD684 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		4A82BD3F20219EB700959D21 /* ic_demo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_demo.png; sourceTree = "<group>"; };
 		4A82BD412021EA5C00959D21 /* ic_setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_setup.png; sourceTree = "<group>"; };
+		4A88A5C22023217900C0AC4E /* VerticalSliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalSliderViewController.swift; sourceTree = "<group>"; };
+		4A88A5C52023219600C0AC4E /* HASlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = HASlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6047F6DBF86EED80C99349BA /* Pods_HASlider_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HASlider_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* HASlider_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HASlider_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -64,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A88A5C42023219600C0AC4E /* HASlider.framework in Frameworks */,
 				D7BC74516911B7B1EBDA4428 /* Pods_HASlider_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,6 +87,7 @@
 		29CC6A2829F25D52D22CF1E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A88A5C52023219600C0AC4E /* HASlider.framework */,
 				6047F6DBF86EED80C99349BA /* Pods_HASlider_Example.framework */,
 				1880DC8CEE42B362392DC797 /* Pods_HASlider_Tests.framework */,
 			);
@@ -134,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				4A88A5C22023217900C0AC4E /* VerticalSliderViewController.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -418,6 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				4A88A5C32023217900C0AC4E /* VerticalSliderViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

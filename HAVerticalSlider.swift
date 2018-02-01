@@ -10,70 +10,70 @@ import Foundation
 
 //MARK:- Protocol
 public protocol VerticalSliderDelegate {
-    func beginTracking(verticalSlider slider: HAVerticalSlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool)
-    func continueTracking(verticalSlider slider: HAVerticalSlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool)
-    func endTracking(verticalSlider slider: HAVerticalSlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool)
+    func beginTracking(verticalSlider slider: HAVerticalSlider, isTrackingTopHandler: Bool, isTrackingBottomHandler: Bool)
+    func continueTracking(verticalSlider slider: HAVerticalSlider, isTrackingTopHandler: Bool, isTrackingBottomHandler: Bool)
+    func endTracking(verticalSlider slider: HAVerticalSlider, isTrackingTopHandler: Bool, isTrackingBottomHandler: Bool)
 }
 
 //MARK:- Global Constant 
 
 @IBDesignable
 open class HAVerticalSlider: UIControl {
-    //MARK:- Left Handler variables
-    var leftHandler = CALayer()
+    //MARK:- Top Handler variables
+    var topHandler = CALayer()
     var handlerY: CGFloat = 0.0
     var handlerX: CGFloat = 0.0
     
-    var leftHandlerPreviousLocation = CGPoint(x: 0.0, y: 0.0)
-    var leftHandlerWidth:CGFloat = 31.0
-    var leftHandlerHeight:CGFloat = 31.0
-    var isTrackingLeftHanlder = false
+    var topHandlerPreviousLocation = CGPoint(x: 0.0, y: 0.0)
+    var topHandlerWidth:CGFloat = 31.0
+    var topHandlerHeight:CGFloat = 31.0
+    var isTrackingTopHanlder = false
     
     @IBInspectable
-    open var leftHandlerColor: UIColor = UIColor.gray {
+    open var topHandlerColor: UIColor = UIColor.gray {
         didSet {
-            leftHandler.backgroundColor = leftHandlerColor.cgColor
+            topHandler.backgroundColor = topHandlerColor.cgColor
         }
     }
     
     @IBInspectable
-    open var leftHandlerImage: UIImage? = nil {
+    open var topHandlerImage: UIImage? = nil {
         didSet{
-            if let image = leftHandlerImage {
+            if let image = topHandlerImage {
                 let size = image.size
-                leftHandlerWidth = size.width
-                leftHandlerHeight = size.height
+                topHandlerWidth = size.width
+                topHandlerHeight = size.height
             }
         }
     }
-    open var leftTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+    open var topTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     
-    //MARK:- Right Handler variables
-    var rightHandler = CALayer()
-    var rightHandlerWidth:CGFloat = 31.0
-    var rightHandlerHeight:CGFloat = 31.0
-    var isTrackingRightHanlder = false
-    var rightHandlerPreviousLocation = CGPoint(x: 0, y: 0 )
+    //MARK:- Bottom Handler variables
+    var bottomHandler = CALayer()
+    var bottomHandlerWidth:CGFloat = 31.0
+    var bottomHandlerHeight:CGFloat = 31.0
+    var isTrackingBottomHanlder = false
+    var bottomHandlerPreviousLocation = CGPoint(x: 0, y: 0 )
     
     @IBInspectable
-    open var rightHandlerColor: UIColor = UIColor.gray {
+    open var bottomHandlerColor: UIColor = UIColor.gray {
         didSet {
-            rightHandler.backgroundColor = rightHandlerColor.cgColor
+            bottomHandler.backgroundColor = bottomHandlerColor.cgColor
         }
     }
     
     @IBInspectable
-    open var rightHandlerImage: UIImage? = nil {
+    open var bottomHandlerImage: UIImage? = nil {
         didSet{
-            if let image = rightHandlerImage {
+            if let image = bottomHandlerImage {
                 let size = image.size
-                rightHandlerWidth = size.width
-                rightHandlerHeight = size.height
+                bottomHandlerWidth = size.width
+                bottomHandlerHeight = size.height
             }
         }
     }
     
-    open var rightTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+    open var bottomTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     
     //MARK:- Line Variables
     var sliderLine = CALayer()
@@ -85,8 +85,8 @@ open class HAVerticalSlider: UIControl {
     open var lineWidth: CGFloat = 0.0 {
         didSet{ 
             sliderLine.frame = CGRect(x: lineX, y: lineY, width: lineWidth, height: lineHeight)
-            updateLeftHanlderFrame(addInView: false)
-            updateRightHanlderFrame(addInView: false)
+            updateTopHanlderFrame(addInView: false)
+            updateBottomHanlderFrame(addInView: false)
             updateLineCorner()
         }
     }
@@ -113,39 +113,39 @@ open class HAVerticalSlider: UIControl {
     open var maximumValue: CGFloat = 100.0
     
     @IBInspectable
-    open var leftValue: CGFloat = 0.0 {
+    open var topValue: CGFloat = 0.0 {
         didSet {
-            updateLeftHandlerPosition()
-            updateLeftTipViewPosition()
-            updateLeftSelectionLineWidth()
+            updateTopHandlerPosition()
+            updateTopTipViewPosition()
+            updateTopSelectionLineWidth()
             updateMiddleSelectionLineWidth()
-            updateRightSelectionLineWidth()
+            updateBottomSelectionLineWidth()
         }
     }
     
     @IBInspectable
-    open var rightValue: CGFloat = 5.0 {
+    open var bottomValue: CGFloat = 5.0 {
         didSet{
-            updateRightHandlerPosition()
-            updateRightTipViewPosition()
-            updateLeftSelectionLineWidth()
+            updateBottomHandlerPosition()
+            updateBottomTipViewPosition()
+            updateTopSelectionLineWidth()
             updateMiddleSelectionLineWidth()
-            updateRightSelectionLineWidth()
+            updateBottomSelectionLineWidth()
         }
     }
     
     //MARK:- Selection Variables
-    var leftSelectionLine = CALayer()
+    var topSelectionLine = CALayer()
     var middleSelectionLine = CALayer()
-    var rightSelectionLine = CALayer()
+    var bottomSelectionLine = CALayer()
     @IBInspectable
-    open var leftSelectionColor: UIColor = UIColor.blue {
+    open var topSelectionColor: UIColor = UIColor.blue {
         didSet{
-            leftSelectionLine.backgroundColor = leftSelectionColor.cgColor
+            topSelectionLine.backgroundColor = topSelectionColor.cgColor
         }
     }
     
-    //  Selection Color between left handler and right handler
+    //  Selection Color between top handler and bottom handler
     @IBInspectable
     open var middleSelectionColor: UIColor = UIColor.red {
         didSet {
@@ -153,30 +153,36 @@ open class HAVerticalSlider: UIControl {
         }
     }
     
-    //  Selcetion Color between right handler and end of line
+    //  Selcetion Color between bottom handler and end of line
     @IBInspectable
-    open var rightSelectionColor: UIColor = UIColor.green {
+    open var bottomSelectionColor: UIColor = UIColor.green {
         didSet {
-            rightSelectionLine.backgroundColor = rightSelectionColor.cgColor
+            bottomSelectionLine.backgroundColor = bottomSelectionColor.cgColor
         }
     }
     
     
     //MARK:- Other Variables
+    open var isRightAlign: Bool = false {
+        didSet {
+            layoutSubviews()
+        }
+    }
+    
     open var delegate: VerticalSliderDelegate?
     @IBInspectable
     open var disableRange: Bool = false {
         didSet {
             if disableRange {
-                rightHandler.isHidden = true
-                rightTipView.isHidden = true
-                rightValue = maximumValue
-                rightSelectionLine.isHidden = true
+                bottomHandler.isHidden = true
+                bottomTipView.isHidden = true
+                bottomValue = maximumValue
+                bottomSelectionLine.isHidden = true
             }
             else {
-                rightHandler.isHidden = false
-                rightTipView.isHidden = false
-                rightSelectionLine.isHidden = false
+                bottomHandler.isHidden = false
+                bottomTipView.isHidden = false
+                bottomSelectionLine.isHidden = false
             }
             layoutSubviews()
         }
@@ -198,65 +204,65 @@ open class HAVerticalSlider: UIControl {
     //MARK:- Helper Methods
     fileprivate func setup() {
         drawSliderLine()
-        updateLeftHanlderFrame(addInView: true)
-        updateRightHanlderFrame(addInView: true)
-        drawLeftSelectionLine()
+        updateTopHanlderFrame(addInView: true)
+        updateBottomHanlderFrame(addInView: true)
+        drawTopSelectionLine()
         drawMiddleSelectionLine()
-        drawRightSelectionLine()
+        drawBottomSelectionLine()
         
-        updateLeftHandlerPosition()
-        updateRightHandlerPosition()
+        updateTopHandlerPosition()
+        updateBottomHandlerPosition()
         
-        drawLeftTipView()
-        drawRightTipView()
+        drawTopTipView()
+        drawBottomTipView()
     }
     
     func reload() {
-        leftValue = minimumValue
-        rightValue = maximumValue
+        topValue = minimumValue
+        bottomValue = maximumValue
         setup()
     }
     
-    fileprivate func isTouchRightHandler(location: CGPoint) -> Bool {
+    fileprivate func isTouchBottomHandler(location: CGPoint) -> Bool {
         
         //Check if slider type in single handler
         if disableRange {
             return false
         }
         
-        let totalX = rightHandler.frame.origin.x + rightHandler.frame.width
-        let totalY = rightHandler.frame.origin.y + rightHandler.frame.height
+        let totalX = bottomHandler.frame.origin.x + bottomHandler.frame.width
+        let totalY = bottomHandler.frame.origin.y + bottomHandler.frame.height
         
-        // Check if left Handler above right handler
-        if leftHandler.zPosition > rightHandler.zPosition {
+        // Check if top Handler above bottom handler
+        if topHandler.zPosition > bottomHandler.zPosition {
             return false
         }
         
         // if touch location inside handler frame
-        if ( location.x >= rightHandler.frame.origin.x && location.x <= totalX ) &&  ( location.y >= rightHandler.frame.origin.y && location.y <= totalY ){
+        if ( location.x >= bottomHandler.frame.origin.x && location.x <= totalX ) &&  ( location.y >= bottomHandler.frame.origin.y && location.y <= totalY ){
             return true
         }
         return false
     }
     
-    fileprivate func isTouchLeftHandler(location: CGPoint) -> Bool {
-        let totalX = leftHandler.frame.origin.x + leftHandler.frame.width
-        let totalY = leftHandler.frame.origin.y + leftHandler.frame.height
+    fileprivate func isTouchTopHandler(location: CGPoint) -> Bool {
+        let totalX = topHandler.frame.origin.x + topHandler.frame.width
+        let totalY = topHandler.frame.origin.y + topHandler.frame.height
         
-        //Check if right handler is above left handler
-        if leftHandler.zPosition < rightHandler.zPosition {
+        //Check if bottom handler is above top handler
+        if topHandler.zPosition < bottomHandler.zPosition {
             return false
         }
         
         // if touch location inside handler frame
-        if (location.x >= leftHandler.frame.origin.x && location.x <= totalX) && ( location.y >= leftHandler.frame.origin.y && location.y <= totalY ) {
+        if (location.x >= topHandler.frame.origin.x && location.x <= totalX) && ( location.y >= topHandler.frame.origin.y && location.y <= totalY ) {
             return true
         }
         return false
     }
     
     fileprivate func positionForValue(value: CGFloat) -> CGFloat {
-        let availableGap = frame.height - leftHandlerHeight
+        let availableGap = frame.height - topHandlerHeight
         let v1 = availableGap * (value - minimumValue)
         let v2 = (maximumValue - minimumValue)
         return (v1 / v2)
@@ -281,16 +287,16 @@ extension HAVerticalSlider {
         self.layer.addSublayer(sliderLine)
     }
     
-    fileprivate func drawLeftSelectionLine() {
+    fileprivate func drawTopSelectionLine() {
         
-        leftSelectionLine.frame = getLeftSelectionLineFrame()
-        leftSelectionLine.zPosition = selectionLineZposition
+        topSelectionLine.frame = getTopSelectionLineFrame()
+        topSelectionLine.zPosition = selectionLineZposition
         
         if roundCorner {
-            leftSelectionLine.cornerRadius = lineWidth / 2
+            topSelectionLine.cornerRadius = lineWidth / 2
         }
-        leftSelectionLine.backgroundColor = leftSelectionColor.cgColor
-        self.layer.addSublayer(leftSelectionLine)
+        topSelectionLine.backgroundColor = topSelectionColor.cgColor
+        self.layer.addSublayer(topSelectionLine)
     }
     
     fileprivate func drawMiddleSelectionLine() {
@@ -305,47 +311,47 @@ extension HAVerticalSlider {
         self.layer.addSublayer(middleSelectionLine)
     }
     
-    fileprivate func drawRightSelectionLine() {
+    fileprivate func drawBottomSelectionLine() {
         
-        rightSelectionLine.frame = getRightSelectionFrame()
-        rightSelectionLine.zPosition = selectionLineZposition
+        bottomSelectionLine.frame = getBottomSelectionFrame()
+        bottomSelectionLine.zPosition = selectionLineZposition
         
         if roundCorner {
-            rightSelectionLine.cornerRadius = lineWidth / 2
+            bottomSelectionLine.cornerRadius = lineWidth / 2
         }
-        rightSelectionLine.backgroundColor = rightSelectionColor.cgColor
-        self.layer.addSublayer(rightSelectionLine)
+        bottomSelectionLine.backgroundColor = bottomSelectionColor.cgColor
+        self.layer.addSublayer(bottomSelectionLine)
     }
     
-    fileprivate func drawLeftTipView() {
+    fileprivate func drawTopTipView() {
     
-        let minX = leftHandler.frame.origin.x + leftHandlerWidth + 30.0
+        let minX = topHandler.frame.origin.x + topHandlerWidth + 30.0
         let availableX = frame.width - minX
-        //Check if left tip view frame height is greater than available space.
-        if leftTipView.frame.width > availableX {
+        //Check if top tip view frame height is greater than available space.
+        if topTipView.frame.width > availableX {
             print(kAlertLeftTipMinSpace)
             return
         }
         
-        leftTipView.layer.zPosition = 1
-        leftTipView.frame.origin.x = minX
-        self.addSubview(leftTipView)
-        updateLeftTipViewPosition()
+        topTipView.layer.zPosition = 1
+        topTipView.frame.origin.x = minX
+        self.addSubview(topTipView)
+        updateTopTipViewPosition()
     }
     
-    fileprivate func drawRightTipView() {
+    fileprivate func drawBottomTipView() {
         
-        let minX = rightHandler.frame.origin.x + rightHandlerWidth +  30.0
+        let minX = bottomHandler.frame.origin.x + bottomHandlerWidth +  30.0
         let availableX = frame.width - minX
-        //Check if left tip view frame height is greater than available space.
-        if rightTipView.frame.width > availableX {
-            print(kAlertLeftTipMinSpace)
+        //Check if top tip view frame height is greater than available space.
+        if bottomTipView.frame.width > availableX {
+            print(kAlertRightTipMinSpace)
             return
         }
-        rightTipView.layer.zPosition = 1
-        rightTipView.frame.origin.x = minX
-        self.addSubview(rightTipView)
-        updateRightTipViewPosition()
+        bottomTipView.layer.zPosition = 1
+        bottomTipView.frame.origin.x = minX
+        self.addSubview(bottomTipView)
+        updateBottomTipViewPosition()
     }
     
 }
@@ -357,28 +363,28 @@ extension HAVerticalSlider {
     fileprivate func getHandlerFrame(forValue value: CGFloat) -> CGRect{
         
         handlerY = positionForValue(value: value)
-        handlerX = (lineX + (lineWidth / 2 )) - (leftHandlerWidth / 2)
-        return CGRect(x: handlerX, y: handlerY, width: leftHandlerWidth, height: leftHandlerHeight)
+        handlerX = (lineX + (lineWidth / 2 )) - (topHandlerWidth / 2)
+        return CGRect(x: handlerX, y: handlerY, width: topHandlerWidth, height: topHandlerHeight)
     }
     
     //SelectionLine Frames
-    fileprivate func getLeftSelectionLineFrame() -> CGRect {
+    fileprivate func getTopSelectionLineFrame() -> CGRect {
         //Starting Point
         let startingPoint = CGPoint(x: lineX, y: lineY)
         
         //End Point
-        let endY = positionForValue(value: leftValue)
+        let endY = positionForValue(value: topValue)
         let endPoint = CGPoint(x: lineX, y: endY)
         
-        let height = startingPoint.y + (endPoint.y + leftHandlerHeight / 2)
+        let height = startingPoint.y + (endPoint.y + topHandlerHeight / 2)
         
         return CGRect(x: lineX, y: lineY, width: lineWidth, height: height)
     }
     
     fileprivate func getMiddleSelectionFrame() -> CGRect {
         //Starting point
-        var startY = positionForValue(value: leftValue)
-        startY = startY + ( leftHandlerHeight / 2 )
+        var startY = positionForValue(value: topValue)
+        startY = startY + ( topHandlerHeight / 2 )
         let startingPoint = CGPoint(x: lineX, y: startY)
         
         //Ending Point
@@ -387,8 +393,8 @@ extension HAVerticalSlider {
             endY = sliderLine.frame.height
         }
         else {
-            endY = positionForValue(value: rightValue)
-            endY = endY + ( leftHandlerHeight / 2 )
+            endY = positionForValue(value: bottomValue)
+            endY = endY + ( topHandlerHeight / 2 )
         }
         
         let endPoint = CGPoint(x: lineX, y: endY)
@@ -396,10 +402,10 @@ extension HAVerticalSlider {
         return  CGRect(x: lineX, y: startingPoint.y, width: lineWidth, height: height)
     }
     
-    fileprivate func getRightSelectionFrame() -> CGRect {
+    fileprivate func getBottomSelectionFrame() -> CGRect {
         //Starting point
-        var startY = positionForValue(value: rightValue)
-        startY = startY + ( leftHandlerHeight / 2 )
+        var startY = positionForValue(value: bottomValue)
+        startY = startY + ( topHandlerHeight / 2 )
         
         //Ending Point
         let height = sliderLine.frame.height - startY
@@ -412,52 +418,52 @@ extension HAVerticalSlider {
 extension HAVerticalSlider {
     
     //Update tip positions
-    fileprivate func updateLeftTipViewPosition() {
-        let yPosition = positionForValue(value: leftValue)
+    fileprivate func updateTopTipViewPosition() {
+        let yPosition = positionForValue(value: topValue)
         updateZpositionOfHandler()
         if yPosition <= sliderLine.frame.origin.y {
-            leftTipView.center.y = sliderLine.frame.origin.y + (leftHandlerHeight / 2)
+            topTipView.center.y = sliderLine.frame.origin.y + (topHandlerHeight / 2)
         }
         else {
-            leftTipView.center.y = yPosition + (leftHandlerHeight / 2)
+            topTipView.center.y = yPosition + (topHandlerHeight / 2)
         }
     }
     
-    fileprivate func updateRightTipViewPosition() {
-        //if range is disable than rightTipView is not visible
+    fileprivate func updateBottomTipViewPosition() {
+        //if range is disable than bottomTipView is not visible
         if disableRange {
             return
         }
         
-        let yPosition = positionForValue(value: rightValue)
+        let yPosition = positionForValue(value: bottomValue)
         updateZpositionOfHandler()
         if yPosition >= lineHeight {
-            rightTipView.center.y = lineHeight - (leftHandlerHeight / 2)
+            bottomTipView.center.y = lineHeight - (topHandlerHeight / 2)
         }
         else {
-            rightTipView.center.y = yPosition + (leftHandlerHeight / 2 )
+            bottomTipView.center.y = yPosition + (topHandlerHeight / 2 )
         }
         
     }
     
     //Update handler positions
-    fileprivate func updateLeftHandlerPosition(){
+    fileprivate func updateTopHandlerPosition(){
         
-        // Check if left handler cross right handler
-        var newY = positionForValue(value: leftValue)
+        // Check if top handler cross bottom handler
+        var newY = positionForValue(value: topValue)
         
         if disableRange {
             // if range is diable than check if handler reach don't reach beyond line.
-            let maximumY = sliderLine.frame.maxY - leftHandlerHeight
+            let maximumY = sliderLine.frame.maxY - topHandlerHeight
             if newY >= maximumY {
                 newY = maximumY
             }
         }
         else {
-            // Stop lefthandler to reach ahead from right handler in right side
-            let rightHandlerY = rightHandler.frame.origin.y
-            if newY >= rightHandlerY {
-                newY = rightHandlerY
+            // Stop tophandler to reach ahead from bottom handler in bottom side
+            let bottomHandlerY = bottomHandler.frame.origin.y
+            if newY >= bottomHandlerY {
+                newY = bottomHandlerY
             }
         }
         
@@ -466,77 +472,77 @@ extension HAVerticalSlider {
             newY = sliderLine.frame.minY
         }
         
-        //update previous location of left hanlder
-        leftHandlerPreviousLocation = CGPoint(x: leftHandlerPreviousLocation.x, y: newY + (leftHandlerHeight / 2))
-        leftHandler.frame.origin.y = newY
+        //update previous location of top hanlder
+        topHandlerPreviousLocation = CGPoint(x: topHandlerPreviousLocation.x, y: newY + (topHandlerHeight / 2))
+        topHandler.frame.origin.y = newY
     }
     
-    fileprivate func updateRightHandlerPosition() {
+    fileprivate func updateBottomHandlerPosition() {
         
-        var newY = positionForValue(value: rightValue)
+        var newY = positionForValue(value: bottomValue)
         
-        //Check if right handler cross left handler
-        if newY <= leftHandler.frame.origin.y {
-            newY = leftHandler.frame.origin.y
+        //Check if bottom handler cross top handler
+        if newY <= topHandler.frame.origin.y {
+            newY = topHandler.frame.origin.y
         }
         
         //Check if hanlder move outside line
-        let maxY = sliderLine.frame.maxY + (leftHandlerHeight / 2)
+        let maxY = sliderLine.frame.maxY + (topHandlerHeight / 2)
         if newY >= maxY {
             newY = maxY
         }
         
         //update handler previos location
-        rightHandlerPreviousLocation = CGPoint(x: rightHandlerPreviousLocation.x, y: newY + (leftHandlerHeight / 2))
-        rightHandler.frame.origin.y = newY
+        bottomHandlerPreviousLocation = CGPoint(x: bottomHandlerPreviousLocation.x, y: newY + (topHandlerHeight / 2))
+        bottomHandler.frame.origin.y = newY
     }
     //Update Selection lines width
-    fileprivate func updateLeftSelectionLineWidth() {
-        leftSelectionLine.frame = getLeftSelectionLineFrame()
+    fileprivate func updateTopSelectionLineWidth() {
+        topSelectionLine.frame = getTopSelectionLineFrame()
     }
     
     fileprivate func updateMiddleSelectionLineWidth() {
         middleSelectionLine.frame = getMiddleSelectionFrame()
     }
     
-    fileprivate func updateRightSelectionLineWidth() {
-        rightSelectionLine.frame = getRightSelectionFrame()
+    fileprivate func updateBottomSelectionLineWidth() {
+        bottomSelectionLine.frame = getBottomSelectionFrame()
     }
     
     fileprivate func updateZpositionOfHandler() {
-        let leftMaxX = leftTipView.frame.origin.y + leftTipView.frame.height
-        let rightMinx = rightTipView.frame.origin.y
-        if leftMaxX > rightMinx {
-            if isTrackingLeftHanlder {
-                leftTipView.layer.zPosition = handlerHigherZPosition
-                rightTipView.layer.zPosition = handlerLowerZPosition
-                leftHandler.zPosition = handlerHigherZPosition
-                rightHandler.zPosition = handlerLowerZPosition
+        let topMaxX = topTipView.frame.origin.y + topTipView.frame.height
+        let bottomMinx = bottomTipView.frame.origin.y
+        if topMaxX > bottomMinx {
+            if isTrackingTopHanlder {
+                topTipView.layer.zPosition = handlerHigherZPosition
+                bottomTipView.layer.zPosition = handlerLowerZPosition
+                topHandler.zPosition = handlerHigherZPosition
+                bottomHandler.zPosition = handlerLowerZPosition
             }
-            else if isTrackingRightHanlder {
-                leftTipView.layer.zPosition = handlerLowerZPosition
-                rightTipView.layer.zPosition = handlerHigherZPosition
-                leftHandler.zPosition = handlerLowerZPosition
-                rightHandler.zPosition = handlerHigherZPosition
+            else if isTrackingBottomHanlder {
+                topTipView.layer.zPosition = handlerLowerZPosition
+                bottomTipView.layer.zPosition = handlerHigherZPosition
+                topHandler.zPosition = handlerLowerZPosition
+                bottomHandler.zPosition = handlerHigherZPosition
             }
         }
         else {
-            leftTipView.layer.zPosition = handlerLowerZPosition
-            rightTipView.layer.zPosition = handlerLowerZPosition
-            leftHandler.zPosition = handlerLowerZPosition
-            rightHandler.zPosition = handlerLowerZPosition
+            topTipView.layer.zPosition = handlerLowerZPosition
+            bottomTipView.layer.zPosition = handlerLowerZPosition
+            topHandler.zPosition = handlerLowerZPosition
+            bottomHandler.zPosition = handlerLowerZPosition
         }
     }
     
     //Update value
-    fileprivate func upateLeftValue(touch: UITouch) {
+    fileprivate func upateTopValue(touch: UITouch) {
         
         let location = touch.location(in: self)
         
         //Determine by how much user dragged
-        let deltaLocation = location.y - leftHandlerPreviousLocation.y
+        let deltaLocation = location.y - topHandlerPreviousLocation.y
         let deltaValue = ( maximumValue - minimumValue ) * ( deltaLocation  / lineHeight )
-        var newValue = leftValue + deltaValue
+        var newValue = topValue + deltaValue
         
         //new value can't be less than minimumvalue
         if newValue <= minimumValue {
@@ -550,31 +556,31 @@ extension HAVerticalSlider {
             }
         }
         else {
-            //If range is enable than new value can't be greater than right value
-            if newValue >= rightValue {
-                newValue = rightValue
+            //If range is enable than new value can't be greater than bottom value
+            if newValue >= bottomValue {
+                newValue = bottomValue
             }
         }
-        leftValue = newValue
+        topValue = newValue
     }
     
-    fileprivate func updateRightValue(touch: UITouch) {
+    fileprivate func updateBottomValue(touch: UITouch) {
         let location = touch.location(in: self)
         
         // 1. Determine by how much the user has dragged
-        let deltaLocation = location.y - rightHandlerPreviousLocation.y
-        let deltaValue = (maximumValue - minimumValue) * deltaLocation  / (lineHeight + (rightHandlerHeight / 2))
-        var newValue = rightValue + deltaValue
+        let deltaLocation = location.y - bottomHandlerPreviousLocation.y
+        let deltaValue = (maximumValue - minimumValue) * deltaLocation  / (lineHeight + (bottomHandlerHeight / 2))
+        var newValue = bottomValue + deltaValue
         
         //If new value greater than equal to maximum value than assign maximum value in new value
         if newValue >= maximumValue {
             newValue = maximumValue
         }
-            //If new value in less than lefthanlder's value than assign left value in new value
-        else if newValue <= leftValue {
-            newValue = leftValue
+            //If new value in less than tophanlder's value than assign top value in new value
+        else if newValue <= topValue {
+            newValue = topValue
         }
-        rightValue = newValue
+        bottomValue = newValue
     }
     
     //Make Slider Line round corner
@@ -583,57 +589,57 @@ extension HAVerticalSlider {
         if roundCorner {
             sliderLine.cornerRadius = radius
             middleSelectionLine.cornerRadius = radius
-            leftSelectionLine.cornerRadius = radius
-            rightSelectionLine.cornerRadius = radius
+            topSelectionLine.cornerRadius = radius
+            bottomSelectionLine.cornerRadius = radius
         }
         else {
             sliderLine.cornerRadius = 0.0
-            leftSelectionLine.cornerRadius = 0.0
+            topSelectionLine.cornerRadius = 0.0
             middleSelectionLine.cornerRadius = 0.0
-            rightSelectionLine.cornerRadius = 0.0
+            bottomSelectionLine.cornerRadius = 0.0
         }
     }
     
     //Update handler frames
-    fileprivate func updateLeftHanlderFrame(addInView isAddSubLayer: Bool) {
+    fileprivate func updateTopHanlderFrame(addInView isAddSubLayer: Bool) {
         
-        // Parameter isAddsublayer use to check if lefthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
+        // Parameter isAddsublayer use to check if tophandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
         
-        leftHandler.zPosition = handlerLowerZPosition
-        leftHandler.frame = getHandlerFrame(forValue: leftValue)
-        leftHandler.backgroundColor = leftHandlerColor.cgColor
-        leftHandler.cornerRadius = (leftHandlerHeight / 2)
-        leftHandlerPreviousLocation = CGPoint(x: handlerX, y: leftHandler.frame.origin.y)
+        topHandler.zPosition = handlerLowerZPosition
+        topHandler.frame = getHandlerFrame(forValue: topValue)
+        topHandler.backgroundColor = topHandlerColor.cgColor
+        topHandler.cornerRadius = (topHandlerHeight / 2)
+        topHandlerPreviousLocation = CGPoint(x: handlerX, y: topHandler.frame.origin.y)
         
-        if let image = leftHandlerImage {
-            leftHandler.contents = image.cgImage
-            leftHandler.backgroundColor = UIColor.clear.cgColor
+        if let image = topHandlerImage {
+            topHandler.contents = image.cgImage
+            topHandler.backgroundColor = UIColor.clear.cgColor
         }
         
         if isAddSubLayer {
-            self.layer.addSublayer(leftHandler)
+            self.layer.addSublayer(topHandler)
         }
     }
     
-    fileprivate func updateRightHanlderFrame(addInView isAddSubLayer: Bool = true ) {
+    fileprivate func updateBottomHanlderFrame(addInView isAddSubLayer: Bool = true ) {
         
-        // Parameter isAddsublayer use to check if righthandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
+        // Parameter isAddsublayer use to check if bottomhandler need to add layer in view. if view is already added and only need to get update than isAddSublayer is false.
         
-        rightHandler.zPosition = handlerLowerZPosition
-        rightHandler.frame = getHandlerFrame(forValue: rightValue)
-        rightHandler.backgroundColor = rightHandlerColor.cgColor
-        rightHandler.cornerRadius = (rightHandlerHeight / 2)
+        bottomHandler.zPosition = handlerLowerZPosition
+        bottomHandler.frame = getHandlerFrame(forValue: bottomValue)
+        bottomHandler.backgroundColor = bottomHandlerColor.cgColor
+        bottomHandler.cornerRadius = (bottomHandlerHeight / 2)
         
-        rightHandlerPreviousLocation = CGPoint(x: handlerX, y: rightHandler.frame.origin.y)
+        bottomHandlerPreviousLocation = CGPoint(x: handlerX, y: bottomHandler.frame.origin.y)
         
-        if let image = rightHandlerImage {
-            rightHandler.contents = image.cgImage
-            rightHandler.backgroundColor = UIColor.clear.cgColor
+        if let image = bottomHandlerImage {
+            bottomHandler.contents = image.cgImage
+            bottomHandler.backgroundColor = UIColor.clear.cgColor
         }
         
         if isAddSubLayer {
             self.layer.setValue(FrameTag.tag_RightHandler, forKey: KRightHandler)
-            self.layer.addSublayer(rightHandler)
+            self.layer.addSublayer(bottomHandler)
         }
     }
     
@@ -647,56 +653,56 @@ extension HAVerticalSlider {
         let location = touch.location(in: self)
         
         //Get which handler touched
-        isTrackingLeftHanlder = isTouchLeftHandler(location: location)
-        isTrackingRightHanlder = isTouchRightHandler(location:  location)
+        isTrackingTopHanlder = isTouchTopHandler(location: location)
+        isTrackingBottomHanlder = isTouchBottomHandler(location:  location)
         
         //Call delegates functions.
-        delegate?.beginTracking(verticalSlider: self, isTrackingLeftHandler: isTrackingLeftHanlder, isTrackingRightHandler: isTrackingRightHanlder)
+        delegate?.beginTracking(verticalSlider: self, isTrackingTopHandler: isTrackingTopHanlder, isTrackingBottomHandler: isTrackingBottomHanlder)
         
         //Update Both Tip View postion.
-        updateLeftTipViewPosition()
-        updateRightTipViewPosition()
+        updateTopTipViewPosition()
+        updateBottomTipViewPosition()
         
-        if isTrackingLeftHanlder {
-            leftHandlerPreviousLocation = location
+        if isTrackingTopHanlder {
+            topHandlerPreviousLocation = location
         }
-        else if isTrackingRightHanlder {
-            rightHandlerPreviousLocation = location
+        else if isTrackingBottomHanlder {
+            bottomHandlerPreviousLocation = location
         }
-        updateLeftSelectionLineWidth()
+        updateTopSelectionLineWidth()
         updateMiddleSelectionLineWidth()
-        updateRightSelectionLineWidth()
+        updateBottomSelectionLineWidth()
         return true
     }
     
     override open func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         
-        delegate?.continueTracking(verticalSlider: self, isTrackingLeftHandler: isTrackingLeftHanlder, isTrackingRightHandler: isTrackingRightHanlder)
+        delegate?.continueTracking(verticalSlider: self, isTrackingTopHandler: isTrackingTopHanlder, isTrackingBottomHandler: isTrackingBottomHanlder)
         
         //Update both tip view according to new value
-        updateLeftTipViewPosition()
-        updateRightTipViewPosition()
+        updateTopTipViewPosition()
+        updateBottomTipViewPosition()
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        if isTrackingLeftHanlder {
-            upateLeftValue(touch: touch)
+        if isTrackingTopHanlder {
+            upateTopValue(touch: touch)
         }
-        else if isTrackingRightHanlder {
-            updateRightValue(touch: touch)
+        else if isTrackingBottomHanlder {
+            updateBottomValue(touch: touch)
         }
-        updateLeftSelectionLineWidth()
+        updateTopSelectionLineWidth()
         updateMiddleSelectionLineWidth()
-        updateRightSelectionLineWidth()
+        updateBottomSelectionLineWidth()
         CATransaction.commit()
         
         return true
     }
     
     override open func endTracking(_ touch: UITouch?, with event: UIEvent?) {
-        delegate?.endTracking(verticalSlider: self, isTrackingLeftHandler: isTrackingLeftHanlder, isTrackingRightHandler: isTrackingRightHanlder)
-        isTrackingLeftHanlder = false
-        isTrackingRightHanlder = false
+        delegate?.endTracking(verticalSlider: self, isTrackingTopHandler: isTrackingTopHanlder, isTrackingBottomHandler: isTrackingBottomHanlder)
+        isTrackingTopHanlder = false
+        isTrackingBottomHanlder = false
     }
 }
 

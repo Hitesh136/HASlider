@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4A406C7A202422230028475A /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 4A406C79202422230028475A /* index.html */; };
+		4A406C7C20242EF80028475A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A406C7B20242EF80028475A /* HomeViewController.swift */; };
 		4A82BD4020219EB700959D21 /* ic_demo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A82BD3F20219EB700959D21 /* ic_demo.png */; };
 		4A82BD422021EA5C00959D21 /* ic_setup.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A82BD412021EA5C00959D21 /* ic_setup.png */; };
 		4A88A5C32023217900C0AC4E /* VerticalSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A88A5C22023217900C0AC4E /* VerticalSliderViewController.swift */; };
@@ -39,6 +40,7 @@
 		1880DC8CEE42B362392DC797 /* Pods_HASlider_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HASlider_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		231128EB586FF78F69BCD684 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		4A406C79202422230028475A /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = ../index.html; sourceTree = "<group>"; };
+		4A406C7B20242EF80028475A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4A82BD3F20219EB700959D21 /* ic_demo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_demo.png; sourceTree = "<group>"; };
 		4A82BD412021EA5C00959D21 /* ic_setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_setup.png; sourceTree = "<group>"; };
 		4A88A5C22023217900C0AC4E /* VerticalSliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalSliderViewController.swift; sourceTree = "<group>"; };
@@ -141,9 +143,10 @@
 		607FACD21AFB9204008FA782 /* Example for HASlider */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				4A406C7B20242EF80028475A /* HomeViewController.swift */,
 				4A88A5C22023217900C0AC4E /* VerticalSliderViewController.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -431,6 +434,7 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				4A88A5C32023217900C0AC4E /* VerticalSliderViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				4A406C7C20242EF80028475A /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,6 +582,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4F7SW76LL6;
 				INFOPLIST_FILE = HASlider/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
@@ -594,6 +599,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4F7SW76LL6;
 				INFOPLIST_FILE = HASlider/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";

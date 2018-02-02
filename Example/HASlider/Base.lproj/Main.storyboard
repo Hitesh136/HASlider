@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Qze-jE-5bU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rTo-MB-zpB">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,31 +10,73 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--HASlider-->
         <scene sceneID="bM4-P1-bIz">
             <objects>
-                <viewController id="Qze-jE-5bU" sceneMemberID="viewController">
+                <viewController id="Qze-jE-5bU" customClass="HomeViewController" customModule="HASlider_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="soS-Qu-Yb0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="lsC-6E-pmW">
+                                <rect key="frame" x="20" y="263.5" width="335" height="140"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o3L-BN-W1H">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="60"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Horizontal Slider">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="actionHorizontalSlider:" destination="Qze-jE-5bU" eventType="touchUpInside" id="oMU-0v-z1Z"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFt-E2-qxe">
+                                        <rect key="frame" x="0.0" y="80" width="335" height="60"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Vertical Slider">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="actionVerticalSlider:" destination="Qze-jE-5bU" eventType="touchUpInside" id="1jZ-Fi-ujc"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="140" id="pW0-BU-FrK"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="lsC-6E-pmW" firstAttribute="centerY" secondItem="soS-Qu-Yb0" secondAttribute="centerY" id="0d5-7O-tow"/>
+                            <constraint firstItem="kqH-CE-i9s" firstAttribute="trailing" secondItem="lsC-6E-pmW" secondAttribute="trailing" constant="20" id="26x-CE-em0"/>
+                            <constraint firstItem="lsC-6E-pmW" firstAttribute="leading" secondItem="kqH-CE-i9s" secondAttribute="leading" constant="20" id="sZr-3w-ou7"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="kqH-CE-i9s"/>
                     </view>
+                    <navigationItem key="navigationItem" title="HASlider" id="Kxe-Y3-2fD"/>
+                    <connections>
+                        <outlet property="btnHorizontalSlider" destination="o3L-BN-W1H" id="o6I-Qh-Q9f"/>
+                        <outlet property="btnVericalSlider" destination="kFt-E2-qxe" id="p91-t2-MCG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qKH-kT-krh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-46" y="8"/>
+            <point key="canvasLocation" x="288.80000000000001" y="19.340329835082461"/>
         </scene>
-        <!--View Controller-->
+        <!--Horizontal Slider-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="HASlider_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="HASlider_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCU-oM-eHd" customClass="HASlider" customModule="HASlider">
-                                <rect key="frame" x="20" y="70" width="335" height="150"/>
+                                <rect key="frame" x="20" y="114" width="335" height="150"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="8sd-b6-VlZ"/>
@@ -78,7 +120,6 @@
                                         <integer key="value" value="0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isHorizontal" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="disableRange" value="NO"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
@@ -88,7 +129,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Xh-Gn-467">
-                                <rect key="frame" x="163.5" y="30" width="47" height="30"/>
+                                <rect key="frame" x="163.5" y="74" width="47" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="pmm-rR-UdS"/>
                                 </constraints>
@@ -98,7 +139,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKy-tQ-iSQ" customClass="HASlider" customModule="HASlider">
-                                <rect key="frame" x="20" y="240" width="335" height="120"/>
+                                <rect key="frame" x="20" y="284" width="335" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="2yC-HF-mJE"/>
@@ -140,7 +181,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bbv-2O-lNJ" customClass="HASlider" customModule="HASlider">
-                                <rect key="frame" x="20" y="360" width="335" height="120"/>
+                                <rect key="frame" x="20" y="404" width="335" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="f50-yt-FRg"/>
@@ -197,6 +238,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Horizontal Slider" id="ypY-eT-cej"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="lblLeft_Slider1" destination="0Pf-yQ-fyP" id="KD2-PD-8bk"/>
                         <outlet property="lblLeft_Slider2" destination="Vbj-gy-XLk" id="7ab-Cw-DyO"/>
@@ -336,18 +379,18 @@
                     <viewLayoutGuide key="safeArea" id="6tl-fm-bjF"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="586" y="20"/>
+            <point key="canvasLocation" x="924" y="19.340329835082461"/>
         </scene>
-        <!--Vertical Slider View Controller-->
+        <!--Vertical Slider-->
         <scene sceneID="RDf-cH-a4d">
             <objects>
-                <viewController id="ZRn-kd-d0f" customClass="VerticalSliderViewController" customModule="HASlider_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VerticalSliderViewController" id="ZRn-kd-d0f" customClass="VerticalSliderViewController" customModule="HASlider_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eVd-yy-qps">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ggp-W1-L76" customClass="HAVerticalSlider" customModule="HASlider">
-                                <rect key="frame" x="20" y="40" width="130" height="500"/>
+                                <rect key="frame" x="20" y="84" width="130" height="500"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="500" id="ZKN-rL-x55"/>
@@ -414,7 +457,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TV6-K6-DQv" customClass="HAVerticalSlider" customModule="HASlider">
-                                <rect key="frame" x="265" y="40" width="90" height="500"/>
+                                <rect key="frame" x="265" y="84" width="90" height="500"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="500" id="96x-a9-mQE"/>
@@ -438,7 +481,7 @@
                                         <color key="value" red="0.42835796780000002" green="1" blue="0.96830468719999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="rightSelectionColor">
-                                        <color key="value" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="rightHandlerColor">
                                         <color key="value" red="0.75251895189999995" green="0.29752147200000001" blue="0.33773040770000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -491,6 +534,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NVq-wW-b7y"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Vertical Slider" id="UKL-Xc-Aec"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="lblLeftView_Slider1" destination="hj4-w1-Lg3" id="qy4-Tc-Age"/>
                         <outlet property="lblRightView_Slider1" destination="aJs-qL-RwF" id="xRV-Oi-33P"/>
@@ -585,7 +630,25 @@
                     <viewLayoutGuide key="safeArea" id="xqc-5Q-J2i"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1280.8" y="20.239880059970016"/>
+            <point key="canvasLocation" x="1620" y="20.239880059970016"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="eUZ-Gc-3rW">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rTo-MB-zpB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="L0z-zR-oj5">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Qze-jE-5bU" kind="relationship" relationship="rootViewController" id="cFI-u2-byj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EQO-Vg-TaS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-625" y="13"/>
         </scene>
     </scenes>
     <resources>

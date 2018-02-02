@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2AB5935C8C4FC26B21EE192E1BD83338 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		4A88A5BF2022FB3400C0AC4E /* HAVerticalSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A88A5BE2022FB3400C0AC4E /* HAVerticalSlider.swift */; };
+		4A88A5C12022FC0D00C0AC4E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A88A5C02022FC0D00C0AC4E /* Constant.swift */; };
 		6134691B92D658D6319AFED3DB949EA7 /* Pods-HASlider_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D02ADADC92FED3895A2F0C9704A8FDA /* Pods-HASlider_Example-dummy.m */; };
 		770DDBE240109399C501FB50AC659E3E /* Pods-HASlider_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BF5641DA3DDEE8A949BD78A663F6E1 /* Pods-HASlider_Tests-dummy.m */; };
 		785077599D500D03DCBC647127C08A86 /* HASlider-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F87DC20A41D3899C3BEE6A980931C4 /* HASlider-dummy.m */; };
@@ -40,6 +42,8 @@
 		26A86B4C2815784C8C8582E00F6D10E9 /* HASlider-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HASlider-prefix.pch"; sourceTree = "<group>"; };
 		360051AB1B291F6E2F46D9D90173FABF /* Pods-HASlider_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HASlider_Example.release.xcconfig"; sourceTree = "<group>"; };
 		43BF5641DA3DDEE8A949BD78A663F6E1 /* Pods-HASlider_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HASlider_Tests-dummy.m"; sourceTree = "<group>"; };
+		4A88A5BE2022FB3400C0AC4E /* HAVerticalSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HAVerticalSlider.swift; sourceTree = "<group>"; };
+		4A88A5C02022FC0D00C0AC4E /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		578DBCA07067F556E0A37710815025C6 /* HASlider.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = HASlider.modulemap; sourceTree = "<group>"; };
 		6013FBF28EAF1E33503F7310FE0FA0C7 /* HASlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HASlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -199,6 +203,8 @@
 		E1F5A1BE2EE3D9A8DA70F43551336769 /* HASlider */ = {
 			isa = PBXGroup;
 			children = (
+				4A88A5C02022FC0D00C0AC4E /* Constant.swift */,
+				4A88A5BE2022FB3400C0AC4E /* HAVerticalSlider.swift */,
 				9DBF001D201DBF4600F57A4E /* HASlider.swift */,
 				D7CA8457CDDE0D3294E71A231FF0F309 /* Support Files */,
 			);
@@ -327,7 +333,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				785077599D500D03DCBC647127C08A86 /* HASlider-dummy.m in Sources */,
+				4A88A5BF2022FB3400C0AC4E /* HAVerticalSlider.swift in Sources */,
 				9DBF001E201DBF4700F57A4E /* HASlider.swift in Sources */,
+				4A88A5C12022FC0D00C0AC4E /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

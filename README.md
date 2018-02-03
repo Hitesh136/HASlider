@@ -9,7 +9,7 @@
 HASlider provide slider with two handler and custom tip view over them. Developer has to pass his custom view in tip view. HASlider has delegates methods for track change in value and update tipview according to new value.
 
 ## Requirements
-Swift 4, Xcode 9.0
+Swift 4, Xcode 9.0+
 
 ## Installation
 

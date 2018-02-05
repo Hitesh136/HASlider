@@ -262,8 +262,7 @@ open class HASlider: UIControl {
             rightHandler.backgroundColor = UIColor.clear.cgColor
         }
         
-        if isAddSubLayer {
-            self.layer.setValue(FrameTag.tag_RightHandler, forKey: KRightHandler)
+        if isAddSubLayer { 
             self.layer.addSublayer(rightHandler)
         }
     }

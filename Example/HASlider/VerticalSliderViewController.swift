@@ -25,10 +25,10 @@ class VerticalSliderViewController: UIViewController {
         super.viewDidLoad()
         
         //Set Left view over handler
-        slider1.topTipView = leftView_Slider1
+//        slider1.topTipView = leftView_Slider1
         
         //Set Right view over handler
-        slider1.bottomTipView = rightView_Slider1
+//        slider1.bottomTipView = rightView_Slider1
         
         //Text in left custom view
         lblLeftView_Slider1.text = String(format: "%d", Int(slider1.topValue))
@@ -40,7 +40,7 @@ class VerticalSliderViewController: UIViewController {
         slider1.delegate = self
         
         //Set Left view over handler
-        slider2.topTipView = tipView_Slider2
+        slider2.customTopTipView = tipView_Slider2
         
         //Text in left custom view
         lblTip_Slider2.text = String(format: "%d", Int(slider2.topValue))

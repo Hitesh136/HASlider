@@ -15,7 +15,15 @@ public protocol VerticalSliderDelegate {
     func endTracking(verticalSlider slider: HAVerticalSlider, isTrackingTopHandler: Bool, isTrackingBottomHandler: Bool)
 }
 
-//MARK:- Global Constant 
+//MARK:- Global Constant
+let kSliderLine = "SliderLineLayer"
+let kTopSelectionLine = "TopoSelectionLineLayer"
+let kMiddleSlectionLine = "MiddleSelectionLayer"
+let kBottomSelectionLine = "BottomSelectionLayer"
+let kTopHandler = "TopHandler"
+let kBottomHandler = "BottomHandler"
+let kTopTipView = "KTopTipView"
+let kBottomTipView = "BottomTipView"
 
 @IBDesignable
 open class HAVerticalSlider: UIControl {
@@ -28,6 +36,7 @@ open class HAVerticalSlider: UIControl {
     var topHandlerWidth:CGFloat = 31.0
     var topHandlerHeight:CGFloat = 31.0
     var isTrackingTopHanlder = false
+    var isTrackingTopView = false
     
     @IBInspectable
     open var topHandlerColor: UIColor = UIColor.gray {
@@ -46,13 +55,15 @@ open class HAVerticalSlider: UIControl {
             }
         }
     }
-    open var topTipView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+    fileprivate var topTipView: UIView? = nil
+    open var customTopTipView: UIView? = nil
     
     //MARK:- Bottom Handler variables
     var bottomHandler = CALayer()
     var bottomHandlerWidth:CGFloat = 31.0
     var bottomHandlerHeight:CGFloat = 31.0
     var isTrackingBottomHanlder = false
+    var isTrackingBottomView = false
     var bottomHandlerPreviousLocation = CGPoint(x: 0, y: 0 )
     
     @IBInspectable
@@ -107,7 +118,7 @@ open class HAVerticalSlider: UIControl {
     
     //MARK:- Values Variables
     @IBInspectable
-    open var minimumValue: CGFloat = 0.0
+    open var minimumValue: CGFloat = 0.0  
     
     @IBInspectable
     open var maximumValue: CGFloat = 100.0
@@ -163,6 +174,9 @@ open class HAVerticalSlider: UIControl {
     
     
     //MARK:- Other Variables
+    @IBInspectable
+    open var isTipTouchEnable: Bool = true
+    
     @IBInspectable
     open var isRightAlign: Bool = false {
         didSet {
@@ -246,6 +260,36 @@ open class HAVerticalSlider: UIControl {
         return false
     }
     
+    fileprivate func isTouchBottomTipView(location: CGPoint) -> Bool {
+        
+        guard let topTipView = topTipView else {
+            return false
+        }
+        //Check if slider type in single handler
+        if disableRange {
+            return false
+        }
+        
+        let totalX = bottomTipView.frame.origin.x + bottomTipView.frame.width
+        let totalY = bottomTipView.frame.origin.y + bottomTipView.frame.height
+        
+        //Check If IBInspectable property isTipTouchEnable is set false
+        if !isTipTouchEnable {
+            return false
+        }
+        
+        // Check if top Handler above bottom handler
+        if topTipView.layer.zPosition > bottomTipView.layer.zPosition {
+            return false
+        }
+        
+        // if touch location inside handler frame
+        if ( location.x >= bottomTipView.frame.origin.x && location.x <= totalX ) &&  ( location.y >= bottomTipView.frame.origin.y && location.y <= totalY ){
+            return true
+        }
+        return false
+    }
+    
     fileprivate func isTouchTopHandler(location: CGPoint) -> Bool {
         let totalX = topHandler.frame.origin.x + topHandler.frame.width
         let totalY = topHandler.frame.origin.y + topHandler.frame.height
@@ -257,6 +301,31 @@ open class HAVerticalSlider: UIControl {
         
         // if touch location inside handler frame
         if (location.x >= topHandler.frame.origin.x && location.x <= totalX) && ( location.y >= topHandler.frame.origin.y && location.y <= totalY ) {
+            return true
+        }
+        return false
+    }
+    
+    fileprivate func isTouchTopView(location: CGPoint) -> Bool {
+        guard let topTipView = topTipView else {
+            return false
+        }
+        
+        let totalX = topTipView.frame.origin.x + topTipView.frame.width
+        let totalY = topTipView.frame.origin.y + topTipView.frame.height
+        
+        //check if bottomtipview above toptipview
+        if topTipView.layer.zPosition < bottomTipView.layer.zPosition {
+            return false
+        }
+        
+        //Check If IBInspectable property isTipTouchEnable is set false
+        if !isTipTouchEnable {
+            return false
+        }
+        
+        // if touch location inside toptipview frame
+        if (location.x >= topTipView.frame.origin.x && location.x <= totalX) && ( location.y >= topTipView.frame.origin.y && location.y <= totalY ) {
             return true
         }
         return false
@@ -291,7 +360,10 @@ extension HAVerticalSlider {
         }
         sliderLine.backgroundColor = lineBackgroundColor.cgColor
         sliderLine.zPosition = slideLineZposition
-        self.layer.addSublayer(sliderLine)
+        if sliderLine.superlayer != self.layer {
+            sliderLine.setValue(kSliderLine, forKeyPath: kSliderLine)
+            self.layer.addSublayer(sliderLine)
+        }
     }
     
     fileprivate func drawTopSelectionLine() {
@@ -304,7 +376,10 @@ extension HAVerticalSlider {
             topSelectionLine.cornerRadius = lineWidth / 2
         }
         topSelectionLine.backgroundColor = topSelectionColor.cgColor
-        self.layer.addSublayer(topSelectionLine)
+        if topSelectionLine.superlayer != self.layer {
+            topSelectionLine.setValue(kTopSelectionLine, forKeyPath: kTopSelectionLine)
+            self.layer.addSublayer(topSelectionLine)
+        }
     }
     
     fileprivate func drawMiddleSelectionLine() {
@@ -316,7 +391,10 @@ extension HAVerticalSlider {
             middleSelectionLine.cornerRadius = lineWidth / 2
         }
         middleSelectionLine.backgroundColor = middleSelectionColor.cgColor
-        self.layer.addSublayer(middleSelectionLine)
+        if middleSelectionLine.superlayer != self.layer {
+            middleSelectionLine.setValue(kMiddleSlectionLine, forKeyPath: kMiddleSlectionLine)
+            self.layer.addSublayer(middleSelectionLine)
+        }
     }
     
     fileprivate func drawBottomSelectionLine() {
@@ -328,11 +406,18 @@ extension HAVerticalSlider {
             bottomSelectionLine.cornerRadius = lineWidth / 2
         }
         bottomSelectionLine.backgroundColor = bottomSelectionColor.cgColor
-        self.layer.addSublayer(bottomSelectionLine)
+        if bottomSelectionLine.superlayer != self.layer {
+            bottomSelectionLine.setValue(kBottomSelectionLine, forKeyPath: kBottomSelectionLine)
+            self.layer.addSublayer(bottomSelectionLine)
+        }
     }
     
     fileprivate func drawTopTipView() {
      
+        guard let customTopTipView = customTopTipView else {
+            return
+        }
+        
         var minX: CGFloat = 0.0
         var availableX: CGFloat = 0.0
         if isRightAlign {
@@ -344,14 +429,23 @@ extension HAVerticalSlider {
             availableX = frame.width - minX
         }
         //Check if top tip view frame height is greater than available space.
-        if topTipView.frame.width > availableX {
+        if customTopTipView.frame.width > availableX {
             print(kAlertLeftTipMinSpace)
             return
         }
         
-        topTipView.layer.zPosition = 1
-        topTipView.frame.origin.x = minX
-        self.addSubview(topTipView)
+        let tempTopTipView = UIView(frame: customTopTipView.frame)
+        tempTopTipView.layer.zPosition = 1
+        tempTopTipView.frame.origin.x = minX
+        tempTopTipView.isUserInteractionEnabled = false
+        tempTopTipView.layer.setValue(kTopTipView, forKeyPath: kTopTipView)
+        tempTopTipView.layer.zPosition = topHandler.zPosition - 10
+        topTipView = tempTopTipView
+        
+        customTopTipView.frame.origin.x = 0.0
+        customTopTipView.frame.origin.y = 0.0
+        topTipView?.addSubview(customTopTipView)
+        self.addSubview(topTipView!)
         updateTopTipViewPosition()
     }
     
@@ -375,10 +469,22 @@ extension HAVerticalSlider {
         }
         bottomTipView.layer.zPosition = 1
         bottomTipView.frame.origin.x = minX
+        bottomTipView.isUserInteractionEnabled = false
+        bottomTipView.layer.setValue(kBottomTipView, forKeyPath: kBottomTipView)
+        self.bottomTipView.layer.zPosition = bottomHandler.zPosition + 10
         self.addSubview(bottomTipView)
         updateBottomTipViewPosition()
+        showAllSublayers()
     }
     
+    func showAllSublayers() {
+        print("************************")
+        for subLayer in self.layer.sublayers! {
+            
+            print("\(subLayer.zPosition)")
+        }
+        print("************************")
+    }
 }
 
 //MARK:- Get Frames
@@ -444,6 +550,11 @@ extension HAVerticalSlider {
     
     //Update tip positions
     fileprivate func updateTopTipViewPosition() {
+        
+        guard let topTipView = topTipView else {
+            return
+        }
+        
         let yPosition = positionForValue(value: topValue)
         updateZpositionOfHandler()
         if yPosition <= sliderLine.frame.origin.y {
@@ -535,24 +646,24 @@ extension HAVerticalSlider {
     }
     
     fileprivate func updateZpositionOfHandler() {
-        let topMaxX = topTipView.frame.origin.y + topTipView.frame.height
-        let bottomMinx = bottomTipView.frame.origin.y
+        let topMaxX = topHandler.frame.origin.y + topHandler.frame.height
+        let bottomMinx = bottomHandler.frame.origin.y
         if topMaxX > bottomMinx {
-            if isTrackingTopHanlder {
-                topTipView.layer.zPosition = handlerHigherZPosition
+            if isTrackingTopHanlder || isTrackingTopView {
+                topTipView?.layer.zPosition = handlerHigherZPosition
                 bottomTipView.layer.zPosition = handlerLowerZPosition
                 topHandler.zPosition = handlerHigherZPosition
                 bottomHandler.zPosition = handlerLowerZPosition
             }
-            else if isTrackingBottomHanlder {
-                topTipView.layer.zPosition = handlerLowerZPosition
+            else if isTrackingBottomHanlder || isTrackingBottomView {
+                topTipView?.layer.zPosition = handlerLowerZPosition
                 bottomTipView.layer.zPosition = handlerHigherZPosition
                 topHandler.zPosition = handlerLowerZPosition
                 bottomHandler.zPosition = handlerHigherZPosition
             }
         }
         else {
-            topTipView.layer.zPosition = handlerLowerZPosition
+            topTipView?.layer.zPosition = handlerLowerZPosition
             bottomTipView.layer.zPosition = handlerLowerZPosition
             topHandler.zPosition = handlerLowerZPosition
             bottomHandler.zPosition = handlerLowerZPosition
@@ -638,10 +749,11 @@ extension HAVerticalSlider {
         
         if let image = topHandlerImage {
             topHandler.contents = image.cgImage
-            topHandler.backgroundColor = UIColor.clear.cgColor
+            topHandler.backgroundColor = UIColor.red.cgColor
         }
         
         if isAddSubLayer {
+            topHandler.setValue(kTopHandler, forKeyPath: kTopHandler)
             self.layer.addSublayer(topHandler)
         }
     }
@@ -663,7 +775,7 @@ extension HAVerticalSlider {
         }
         
         if isAddSubLayer {
-            self.layer.setValue(FrameTag.tag_RightHandler, forKey: KRightHandler)
+            bottomHandler.setValue(kBottomHandler, forKey: kBottomHandler)
             self.layer.addSublayer(bottomHandler)
         }
     }
@@ -679,7 +791,10 @@ extension HAVerticalSlider {
         
         //Get which handler touched
         isTrackingTopHanlder = isTouchTopHandler(location: location)
+        isTrackingTopView = isTouchTopView(location: location)
+    
         isTrackingBottomHanlder = isTouchBottomHandler(location:  location)
+        isTrackingBottomView = isTouchBottomTipView(location: location)
         
         //Call delegates functions.
         delegate?.beginTracking(verticalSlider: self, isTrackingTopHandler: isTrackingTopHanlder, isTrackingBottomHandler: isTrackingBottomHanlder)
@@ -688,10 +803,10 @@ extension HAVerticalSlider {
         updateTopTipViewPosition()
         updateBottomTipViewPosition()
         
-        if isTrackingTopHanlder {
+        if isTrackingTopHanlder || isTrackingTopView{
             topHandlerPreviousLocation = location
         }
-        else if isTrackingBottomHanlder {
+        else if isTrackingBottomHanlder || isTrackingBottomView {
             bottomHandlerPreviousLocation = location
         }
         updateTopSelectionLineWidth()
@@ -710,10 +825,10 @@ extension HAVerticalSlider {
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        if isTrackingTopHanlder {
+        if isTrackingTopHanlder || isTrackingTopView {
             upateTopValue(touch: touch)
         }
-        else if isTrackingBottomHanlder {
+        else if isTrackingBottomHanlder || isTrackingBottomView {
             updateBottomValue(touch: touch)
         }
         updateTopSelectionLineWidth()
@@ -727,7 +842,11 @@ extension HAVerticalSlider {
     override open func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         delegate?.endTracking(verticalSlider: self, isTrackingTopHandler: isTrackingTopHanlder, isTrackingBottomHandler: isTrackingBottomHanlder)
         isTrackingTopHanlder = false
+        isTrackingTopView = false
+        
+        isTrackingBottomView = false
         isTrackingBottomHanlder = false
+        
     }
 }
 

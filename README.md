@@ -9,7 +9,7 @@
 HASlider provide slider with two handler and custom tip view over them. Developer has to pass his custom view in tip view. HASlider has delegates methods for track change in value and update tipview according to new value.
 
 ## Requirements
-Swift 4, Xcode 9.0
+Swift 4, Xcode 9.0+
 
 ## Installation
 
@@ -25,11 +25,17 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ![](/Example/Resources/Gif/slider1.gif)
 ![](/Example/Resources/Gif/slider2.gif)
+![](/Example/Resources/Gif/verticalSlider.gif)
 ![](/Example/Resources/Gif/slider3.gif)
+
 
 ## Usage
 
-Add UIView in interface builder and open its identityinspector and set its custom class as HASlider.
+Add UIView in interface builder and open its identityinspector and set its custom class as HASlider or HAVerticalSlider.
+
+HASlider --- Horizontal Slider
+
+HAVerticalSlider --- Vertical Slider
 
 ![](/Example/Resources/Images/ic_setup.png)
 ![](/Example/Resources/Images/ic_demo.png)
@@ -81,6 +87,7 @@ default value is false.
 
 #### `roundCorner`
 set roundCorner of slider line.
+
 
 #### `Delegates`
 Implement delegate methods for listen change in value and update cutom tip view for new value.

@@ -25,13 +25,16 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ![](/Example/Resources/Gif/slider1.gif)
 ![](/Example/Resources/Gif/slider2.gif)
-![](/Example/Resources/Gif/slider3.gif)
 ![](/Example/Resources/Gif/verticalSlider.gif)
+![](/Example/Resources/Gif/slider3.gif)
+
 
 ## Usage
 
 Add UIView in interface builder and open its identityinspector and set its custom class as HASlider or HAVerticalSlider.
+
 HASlider --- Horizontal Slider
+
 HAVerticalSlider --- Vertical Slider
 
 ![](/Example/Resources/Images/ic_setup.png)

@@ -7,6 +7,8 @@ public protocol SliderDelegate {
     func endTracking(slider: HASlider, isTrackingLeftHandler: Bool, isTrackingRightHandler: Bool)
 }
 
+
+
 @IBDesignable
 open class HASlider: UIControl {
     
@@ -17,6 +19,10 @@ open class HASlider: UIControl {
     var leftSelectionLine = CALayer()
     var middleSelectionLine = CALayer()
     var rightSelectionLine = CALayer()
+    
+    enum FrameTag: Int {
+        case tag_Line, tag_LeftHandler, tag_RightHandler, tag_LeftTipView, tag_RightTipView
+    }
     
     let handlerLowerZPosition:CGFloat = 3.0
     let handlerHigherZPosition:CGFloat = 4.0
@@ -262,7 +268,8 @@ open class HASlider: UIControl {
             rightHandler.backgroundColor = UIColor.clear.cgColor
         }
         
-        if isAddSubLayer { 
+        if isAddSubLayer {
+            self.layer.setValue(FrameTag.tag_RightHandler, forKey: "RightHandlerTag")
             self.layer.addSublayer(rightHandler)
         }
     }
@@ -309,7 +316,7 @@ open class HASlider: UIControl {
         let availableY = minY - 10.0
         //Check if left tip view frame height is greater than available space.
         if leftTipView.frame.height > availableY {
-            print(kAlertLeftTipMinSpace)
+            print("HASLIDER --- Left Tip View has more height than available space. Increase view height for see left tip view")
             return
         }
         
@@ -324,7 +331,7 @@ open class HASlider: UIControl {
         let availableY = minY - 10.0
         //Check if Right tip view frame height is greater than available space.
         if rightHandler.frame.height > availableY {
-            print(kAlertRightTipMinSpace)
+            print("HASLIDER --- Right Tip View has more height than available space. Increase view height for see right tip view")
             return
         }
         

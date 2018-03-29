@@ -17,7 +17,7 @@ HASlider is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'HASlider'
+pod 'HASlider', :git => 'https://github.com/Hitesh136/HASlider'
 ```
 ## Example
 

@@ -63,18 +63,7 @@ class ViewController: UIViewController {
         lblValue_Slider3.text = String(format: "%d", Int(slider3.leftValue))
         slider3.delegate = self
         
-    }
-    
-    @IBAction func actionReload(_ sender: Any) {
-        slider1.leftValue = 0
-        slider1.rightValue = 100
-        
-        slider2.leftValue = 0
-        slider2.rightValue = 100
-        
-        slider3.leftValue = 0
-        slider3.rightValue = 100
-    }
+    } 
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

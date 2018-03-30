@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -127,16 +128,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Xh-Gn-467">
-                                <rect key="frame" x="163.5" y="74" width="47" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="pmm-rR-UdS"/>
-                                </constraints>
-                                <state key="normal" title="Reload"/>
-                                <connections>
-                                    <action selector="actionReload:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ncc-1b-onh"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKy-tQ-iSQ" customClass="HASlider" customModule="HASlider">
                                 <rect key="frame" x="20" y="284" width="335" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -225,15 +216,13 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dKy-tQ-iSQ" secondAttribute="trailing" constant="20" id="4HP-lQ-k8Z"/>
                             <constraint firstItem="bbv-2O-lNJ" firstAttribute="top" secondItem="dKy-tQ-iSQ" secondAttribute="bottom" id="5z8-p9-BPR"/>
+                            <constraint firstItem="nCU-oM-eHd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="Eb7-vx-w5Q"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nCU-oM-eHd" secondAttribute="trailing" constant="20" id="Evz-dk-BxZ"/>
                             <constraint firstItem="dKy-tQ-iSQ" firstAttribute="top" secondItem="nCU-oM-eHd" secondAttribute="bottom" constant="20" id="Ima-BY-PpR"/>
-                            <constraint firstItem="8Xh-Gn-467" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="K9p-df-jMY"/>
                             <constraint firstItem="bbv-2O-lNJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="OqG-9o-66c"/>
                             <constraint firstItem="nCU-oM-eHd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Xfs-ej-CO4"/>
-                            <constraint firstItem="nCU-oM-eHd" firstAttribute="top" secondItem="8Xh-Gn-467" secondAttribute="bottom" constant="10" id="fIt-uV-oCH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bbv-2O-lNJ" secondAttribute="trailing" constant="20" id="hrO-9k-D3C"/>
                             <constraint firstItem="dKy-tQ-iSQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="jPl-pe-hVE"/>
-                            <constraint firstItem="8Xh-Gn-467" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rpP-iN-8oo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -454,6 +443,7 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isRightAlign" value="NO"/>
                                     <userDefinedRuntimeAttribute type="image" keyPath="topHandlerImage" value="ic_slider-circle-1"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="bottomHandlerImage" value="ic_slider-circle-1"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TV6-K6-DQv" customClass="HAVerticalSlider" customModule="HASlider">
